@@ -61,6 +61,9 @@ build/
 # environment
 .env
 request*.json
+mta.yaml
+mta_archives
+.java-version
 
 # node test artifacts
 node_modules
