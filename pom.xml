@@ -36,6 +36,7 @@
     <version.sap-jco>3.1.10</version.sap-jco>
 
     <version.spring-boot>3.3.3</version.spring-boot>
+    <version.spring-boot-starter-camunda>8.5.6</version.spring-boot-starter-camunda>
     <version.logback>1.5.8</version.logback>
 
 
@@ -52,16 +53,16 @@
   </properties>
 
   <dependencyManagement>
-  <dependencies>
-    <!-- Spring Boot BOM -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-dependencies</artifactId>
-      <version>${version.spring-boot}</version>
-      <scope>import</scope>
-      <type>pom</type>
-    </dependency>
-  </dependencies>
+    <dependencies>
+      <!-- Spring Boot BOM -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${version.spring-boot}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
 
   </dependencyManagement>
 
@@ -99,6 +100,7 @@
       <version>${version.cloud-sdk}</version> <!-- uniform versioning w/ cloud sdk -->
     </dependency>
 
+
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
@@ -110,13 +112,6 @@
       <version>${version.logback}</version>
     </dependency>
 
-    <!-- connector runtime -->
-    <dependency>
-      <groupId>io.camunda.connector</groupId>
-      <artifactId>spring-boot-starter-camunda-connectors</artifactId>
-      <version>${version.connectors}</version>
-    </dependency>
-
     <dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-registry-prometheus</artifactId>
@@ -125,6 +120,14 @@
     <dependency>
       <groupId>org.codehaus.janino</groupId>
       <artifactId>janino</artifactId>
+    </dependency>
+
+    <!-- connector runtime -->
+
+    <dependency>
+      <groupId>io.camunda.connector</groupId>
+      <artifactId>spring-boot-starter-camunda-connectors</artifactId>
+      <version>${version.spring-boot-starter-camunda}</version>
     </dependency>
 
     <!-- Element template generator annotations (compile-time only) -->
@@ -142,7 +145,6 @@
       <version>${version.connectors}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -174,179 +176,255 @@
   </dependencies>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <configuration>
-            <mainClass>io.camunda.connector.sap.rfc.ApplicationRuntime</mainClass>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>${plugin.version.maven-clean-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>${plugin.version.maven-dependency-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>${plugin.version.maven-resources-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${plugin.version.maven-compiler-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>${plugin.version.maven-jar-plugin}</version>
-          <configuration>
-            <useDefaultManifestFile>false</useDefaultManifestFile>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>${plugin.version.maven-install-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-shade-plugin</artifactId>
-          <version>${plugin.version.maven-shade-plugin}</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-maven-plugin</artifactId>
-              <version>${version.spring-boot}</version>
-            </dependency>
-          </dependencies>
-          <configuration>
-            <shadedArtifactAttached>true</shadedArtifactAttached>
-            <shadedClassifierName>with-dependencies</shadedClassifierName>
-            <!-- no need for this since we are not consuming this artifact downstream -->
-            <createDependencyReducedPom>false</createDependencyReducedPom>
-            <filters>
-              <filter>
-                <artifact>*:*</artifact>
-                <excludes>
-                  <exclude>module-info.class</exclude>
-                  <exclude>META-INF/MANIFEST.MF</exclude>
-                  <exclude>META-INF/*.SF</exclude>
-                  <exclude>META-INF/*.DSA</exclude>
-                  <exclude>META-INF/*.RSA</exclude>
-                </excludes>
-              </filter>
-            </filters>
-            <transformers>
-              <!-- This is needed if you have dependencies that use Service Loader. Most Google
-              Cloud client libraries does. -->
-              <transformer
-                implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-              <!-- This is needed to not repeat licenses in the META-INF directory -->
-              <transformer
-                implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
-              <!-- This is needed to merge existing NOTICE files and keep them downstream -->
-              <transformer
-                implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
-                <addHeader>false</addHeader>
-              </transformer>
-              <transformer
-                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer" />
-            </transformers>
-            <!-- Uncomment and adjust to use relocations inside your JAR -->
-            <!--<relocations>
-              <relocation>
-                <pattern>com.fasterxml.jackson</pattern>
-                <shadedPattern>myconnector.com.fasterxml.jackson</shadedPattern>
-              </relocation>
-            </relocations>-->
-          </configuration>
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>shade</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>io.camunda.connector</groupId>
-          <artifactId>element-template-generator-maven-plugin</artifactId>
-          <version>${version.connectors}</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>generate-templates</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${plugin.version.maven-surefire-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>com.diffplug.spotless</groupId>
-          <artifactId>spotless-maven-plugin</artifactId>
-          <version>${plugin.version.spotless-maven-plugin}</version>
-          <configuration>
-            <formats>
-              <format>
-                <includes>
-                  <include>*.md</include>
-                  <include>.gitignore</include>
-                </includes>
-                <trimTrailingWhitespace />
-                <endWithNewline />
-                <indent>
-                  <spaces>true</spaces>
-                  <spacesPerTab>2</spacesPerTab>
-                </indent>
-              </format>
-            </formats>
-            <java>
-              <googleJavaFormat />
-              <replace>
-                <name>keepCoolSrcComment</name>
-                <search>// ></search>
-                <replacement>//></replacement>
-              </replace>
-            </java>
-            <pom />
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
+    <!--    <pluginManagement>-->
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>io.camunda.connector.sap.rfc.ApplicationRuntime</mainClass>
+        </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${plugin.version.maven-clean-plugin}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>${plugin.version.maven-dependency-plugin}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>${plugin.version.maven-resources-plugin}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${plugin.version.maven-compiler-plugin}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${plugin.version.maven-jar-plugin}</version>
+        <configuration>
+          <useDefaultManifestFile>false</useDefaultManifestFile>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>${plugin.version.maven-install-plugin}</version>
+      </plugin>
+      <!--        <plugin>-->
+      <!--          <groupId>org.apache.maven.plugins</groupId>-->
+      <!--          <artifactId>maven-shade-plugin</artifactId>-->
+      <!--          <version>${plugin.version.maven-shade-plugin}</version>-->
+      <!--          <dependencies>-->
+      <!--            <dependency>-->
+      <!--              <groupId>org.springframework.boot</groupId>-->
+      <!--              <artifactId>spring-boot-maven-plugin</artifactId>-->
+      <!--              <version>${version.spring-boot}</version>-->
+      <!--            </dependency>-->
+      <!--          </dependencies>-->
+      <!--          <configuration>-->
+      <!--            <shadedArtifactAttached>true</shadedArtifactAttached>-->
+      <!--            <shadedClassifierName>with-dependencies</shadedClassifierName>-->
+      <!--            &lt;!&ndash; no need for this since we are not consuming this artifact downstream &ndash;&gt;-->
+      <!--            <createDependencyReducedPom>false</createDependencyReducedPom>-->
+      <!--            <filters>-->
+      <!--              <filter>-->
+      <!--                <artifact>*:*</artifact>-->
+      <!--                <excludes>-->
+      <!--                  <exclude>module-info.class</exclude>-->
+      <!--                  <exclude>META-INF/MANIFEST.MF</exclude>-->
+      <!--                  <exclude>META-INF/*.SF</exclude>-->
+      <!--                  <exclude>META-INF/*.DSA</exclude>-->
+      <!--                  <exclude>META-INF/*.RSA</exclude>-->
+      <!--                </excludes>-->
+      <!--              </filter>-->
+      <!--            </filters>-->
+      <!--            <transformers>-->
+      <!--              &lt;!&ndash; This is needed if you have dependencies that use Service Loader. Most Google-->
+      <!--              Cloud client libraries does. &ndash;&gt;-->
+      <!--              <transformer-->
+      <!--                implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />-->
+      <!--              &lt;!&ndash; This is needed to not repeat licenses in the META-INF directory &ndash;&gt;-->
+      <!--              <transformer-->
+      <!--                implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />-->
+      <!--              &lt;!&ndash; This is needed to merge existing NOTICE files and keep them downstream &ndash;&gt;-->
+      <!--              <transformer-->
+      <!--                implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">-->
+      <!--                <addHeader>false</addHeader>-->
+      <!--              </transformer>-->
+      <!--              <transformer-->
+      <!--                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+      <!--                <manifestEntries>-->
+      <!--                  <Main-Class>io.camunda.connector.sap.rfc.ApplicationRuntime</Main-Class>-->
+      <!--                </manifestEntries>-->
+      <!--              </transformer>-->
+      <!--            </transformers>-->
+      <!--            &lt;!&ndash; Uncomment and adjust to use relocations inside your JAR &ndash;&gt;-->
+      <!--            &lt;!&ndash;<relocations>-->
+      <!--              <relocation>-->
+      <!--                <pattern>com.fasterxml.jackson</pattern>-->
+      <!--                <shadedPattern>myconnector.com.fasterxml.jackson</shadedPattern>-->
+      <!--              </relocation>-->
+      <!--            </relocations>&ndash;&gt;-->
+      <!--          </configuration>-->
+      <!--          <executions>-->
+      <!--            <execution>-->
+      <!--              <phase>package</phase>-->
+      <!--              <goals>-->
+      <!--                <goal>shade</goal>-->
+      <!--              </goals>-->
+      <!--            </execution>-->
+      <!--          </executions>-->
+      <!--        </plugin>-->
       <plugin>
         <groupId>io.camunda.connector</groupId>
         <artifactId>element-template-generator-maven-plugin</artifactId>
-        <configuration>
-          <connectors>
-            <connector>
-              <connectorClass>io.camunda.connector.sap.rfc.RFCConnector</connectorClass>
-            </connector>
-          </connectors>
-        </configuration>
+        <version>${version.connectors}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-templates</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${plugin.version.maven-surefire-plugin}</version>
       </plugin>
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
+        <version>${plugin.version.spotless-maven-plugin}</version>
+        <configuration>
+          <formats>
+            <format>
+              <includes>
+                <include>*.md</include>
+                <include>.gitignore</include>
+              </includes>
+              <trimTrailingWhitespace />
+              <endWithNewline />
+              <indent>
+                <spaces>true</spaces>
+                <spacesPerTab>2</spacesPerTab>
+              </indent>
+            </format>
+          </formats>
+          <java>
+            <googleJavaFormat />
+            <replace>
+              <name>keepCoolSrcComment</name>
+              <search>// ></search>
+              <replacement>//></replacement>
+            </replace>
+          </java>
+          <pom />
+        </configuration>
       </plugin>
+      <!--      </plugins>-->
+      <!--    </pluginManagement>-->
+
+      <!--    <plugins>-->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <skip>false</skip>
+        </configuration>
+        <executions>
+          <execution>
+            <id>repackage</id>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <!--            <configuration>-->
+            <!--              <classifier>exec</classifier>-->
+            <!--            </configuration>-->
+          </execution>
+        </executions>
+      </plugin>
+      <!--      <plugin>-->
+      <!--        <groupId>org.apache.maven.plugins</groupId>-->
+      <!--        <artifactId>maven-shade-plugin</artifactId>-->
+      <!--        <version>${plugin.version.maven-shade-plugin}</version>-->
+      <!--        <configuration>-->
+      <!--          <shadedArtifactAttached>true</shadedArtifactAttached>-->
+      <!--          <shadedClassifierName>with-dependencies</shadedClassifierName>-->
+      <!--          &lt;!&ndash; no need for this since we are not consuming this artifact downstream &ndash;&gt;-->
+      <!--          <createDependencyReducedPom>false</createDependencyReducedPom>-->
+      <!--          <filters>-->
+      <!--            <filter>-->
+      <!--              <artifact>*:*</artifact>-->
+      <!--              <excludes>-->
+      <!--                <exclude>module-info.class</exclude>-->
+      <!--                <exclude>META-INF/MANIFEST.MF</exclude>-->
+      <!--                <exclude>META-INF/*.SF</exclude>-->
+      <!--                <exclude>META-INF/*.DSA</exclude>-->
+      <!--                <exclude>META-INF/*.RSA</exclude>-->
+      <!--              </excludes>-->
+      <!--            </filter>-->
+      <!--          </filters>-->
+      <!--          <transformers>-->
+      <!--            &lt;!&ndash; This is needed if you have dependencies that use Service Loader. Most Google-->
+      <!--            Cloud client libraries does. &ndash;&gt;-->
+      <!--            <transformer-->
+      <!--              implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />-->
+      <!--            &lt;!&ndash; This is needed to not repeat licenses in the META-INF directory &ndash;&gt;-->
+      <!--            <transformer-->
+      <!--              implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />-->
+      <!--            &lt;!&ndash; This is needed to merge existing NOTICE files and keep them downstream &ndash;&gt;-->
+      <!--            <transformer-->
+      <!--              implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">-->
+      <!--              <addHeader>false</addHeader>-->
+      <!--            </transformer>-->
+      <!--            <transformer-->
+      <!--              implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+      <!--              <manifestEntries>-->
+      <!--                <Main-Class>io.camunda.connector.sap.rfc.ApplicationRuntime</Main-Class>-->
+      <!--              </manifestEntries>-->
+      <!--            </transformer>-->
+      <!--          </transformers>-->
+      <!--          &lt;!&ndash; Uncomment and adjust to use relocations inside your JAR &ndash;&gt;-->
+      <!--          &lt;!&ndash;<relocations>-->
+      <!--            <relocation>-->
+      <!--              <pattern>com.fasterxml.jackson</pattern>-->
+      <!--              <shadedPattern>myconnector.com.fasterxml.jackson</shadedPattern>-->
+      <!--            </relocation>-->
+      <!--          </relocations>&ndash;&gt;-->
+      <!--        </configuration>-->
+      <!--        <executions>-->
+      <!--          <execution>-->
+      <!--            <phase>package</phase>-->
+      <!--            <goals>-->
+      <!--              <goal>shade</goal>-->
+      <!--            </goals>-->
+      <!--          </execution>-->
+      <!--        </executions>-->
+      <!--      </plugin>-->
+<!--      <plugin>-->
+<!--        <groupId>io.camunda.connector</groupId>-->
+<!--        <artifactId>element-template-generator-maven-plugin</artifactId>-->
+<!--        <configuration>-->
+<!--          <connectors>-->
+<!--            <connector>-->
+<!--              <connectorClass>io.camunda.connector.sap.rfc.RFCConnector</connectorClass>-->
+<!--            </connector>-->
+<!--          </connectors>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+<!--      <plugin>-->
+<!--        <groupId>com.diffplug.spotless</groupId>-->
+<!--        <artifactId>spotless-maven-plugin</artifactId>-->
+<!--      </plugin>-->
     </plugins>
   </build>
 
@@ -400,6 +478,18 @@
   </profiles>
 
   <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>identity</id>
+      <name>Camunda Identity</name>
+      <url>https://artifacts.camunda.com/artifactory/camunda-identity/</url>
+    </repository>
+
     <repository>
       <releases>
         <enabled>true</enabled>
