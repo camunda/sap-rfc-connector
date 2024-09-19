@@ -91,7 +91,7 @@
     "constraints" : {
       "notEmpty" : false,
       "pattern" : {
-        "value" : "\\[\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*})*]",
+        "value" : "^\\s*(=\\[\\s*(\\{\\s*name\\s*:\\s*[^,{}]*,\\s*type\\s*:\\s*[^,{}]*,\\s*value\\s*:\\s*[^,{}]*\\}\\s*(,\\s*\\{\\s*name\\s*:\\s*[^,{}]*,\\s*type\\s*:\\s*[^,{}]*,\\s*value\\s*:\\s*[^,{}]*\\}\\s*)*)?\\s*\\])?\\s*$",
         "message" : "must be an array list with each entry having 'name', 'type' and 'value' keys"
       }
     },
@@ -111,7 +111,7 @@
     "constraints" : {
       "notEmpty" : false,
       "pattern" : {
-        "value" : "\\[\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*})*]",
+        "value" : "^\\s*(=\\[\\s*(\\{\\s*name\\s*:\\s*[^,{}]*,\\s*type\\s*:\\s*[^,{}]*\\}\\s*(,\\s*\\{\\s*name\\s*:\\s*[^,{}]*,\\s*type\\s*:\\s*[^,{}]*\\}\\s*)*)?\\s*\\])?\\s*$",
         "message" : "must be an array list with each entry having 'name' and 'type' keys"
       }
     },
@@ -131,7 +131,7 @@
     "constraints" : {
       "notEmpty" : false,
       "pattern" : {
-        "value" : "\\[\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*})*]",
+        "value" : "^\\s*(=\\[\\s*(\\{\\s*name\\s*:\\s*[^,{}]*,\\s*type\\s*:\\s*[^,{}]*(,\\s*value\\s*:\\s*[^,{}]*?)?\\}\\s*(,\\s*\\{\\s*name\\s*:\\s*[^,{}]*,\\s*type\\s*:\\s*[^,{}]*(,\\s*value\\s*:\\s*[^,{}]*?)?\\}\\s*)*)?\\s*\\])?\\s*$",
         "message" : "must be an array list with each entry having 'name', 'type' and (optional) 'value' keys"
       }
     },
@@ -156,7 +156,7 @@
     "constraints" : {
       "notEmpty" : false,
       "pattern" : {
-        "value" : "\\[\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)\\}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)})*]",
+        "value" : "^\\s*(=\\[\\s*(\\{\\s*name\\s*:\\s*[^,{}]*,\\s*(type\\s*:\\s*[^,{}]*|isReturn\\s*:\\s*true)\\s*\\}\\s*(,\\s*\\{\\s*name\\s*:\\s*[^,{}]*,\\s*(type\\s*:\\s*[^,{}]*|isReturn\\s*:\\s*true)\\s*\\}\\s*)*)?\\s*\\])?\\s*$",
         "message" : "must be an array list with each entry having 'name'; type and isReturn are mutually exclusive"
       }
     },
