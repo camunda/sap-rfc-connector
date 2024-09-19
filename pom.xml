@@ -294,6 +294,13 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <connectors>
+            <connector>
+              <connectorClass>io.camunda.connector.sap.rfc.RFCConnector</connectorClass>
+            </connector>
+          </connectors>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
