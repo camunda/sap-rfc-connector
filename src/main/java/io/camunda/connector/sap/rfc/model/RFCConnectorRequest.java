@@ -3,6 +3,7 @@ package io.camunda.connector.sap.rfc.model;
 import io.camunda.connector.generator.dsl.Property;
 import io.camunda.connector.generator.java.annotation.TemplateProperty;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 public record RFCConnectorRequest(
     @TemplateProperty(
@@ -28,14 +29,23 @@ public record RFCConnectorRequest(
             description = "variables to send to the the module/BAPI",
             feel = Property.FeelMode.optional,
             optional = true,
-            defaultValue = "=[{}]")
+            defaultValue = "=[{name:'param', type:'type', value:'value'}]")
+        @Pattern(
+            regexp =
+                "\\[\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*})*]",
+            message =
+                "must be an array list with each entry having 'name', 'type' and 'value' keys")
         Exporting[] exporting,
     @TemplateProperty(
             label = "importing parameter",
             description = "which variables the module/BAPI returns should be picked up",
             feel = Property.FeelMode.optional,
             optional = true,
-            defaultValue = "=[{}]")
+            defaultValue = "=[{name:'param', type:'type'}]")
+        @Pattern(
+            regexp =
+                "\\[\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*})*]",
+            message = "must be an array list with each entry having 'name' and 'type' keys")
         Importing[] importing,
     @TemplateProperty(
             label = "changing parameter",
@@ -43,9 +53,14 @@ public record RFCConnectorRequest(
                 "which variables the module/BAPI receives and returns should be processed",
             feel = Property.FeelMode.optional,
             optional = true,
-            defaultValue = "=[{}]",
+            defaultValue = "=[{name:'param', type:'type', value:'value'}]",
             condition =
                 @TemplateProperty.PropertyCondition(property = "moduleType", equals = "rfm"))
+        @Pattern(
+            regexp =
+                "\\[\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*})*]",
+            message =
+                "must be an array list with each entry having 'name', 'type' and (optional) 'value' keys")
         Changing[] changing,
     @TemplateProperty(
             label = "tables parameter",
@@ -53,5 +68,10 @@ public record RFCConnectorRequest(
                 "which tables the module/BAPI receives and returns should be managed,\n for RETURN table BAPIRET2, set 'isReturn' to true",
             feel = Property.FeelMode.optional,
             optional = true,
-            defaultValue = "=[{}]")
+            defaultValue = "=[{name:'table', type: 'some_type'},{name:'BAPIRET2', isReturn:true}]")
+        @Pattern(
+            regexp =
+                "\\[\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)\\}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)})*]",
+            message =
+                "must be an array list with each entry having 'name'; type and isReturn are mutually exclusive")
         Tables[] tables) {}

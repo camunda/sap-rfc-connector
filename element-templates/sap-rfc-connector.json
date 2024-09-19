@@ -87,7 +87,14 @@
     "label" : "exporting parameter",
     "description" : "variables to send to the the module/BAPI",
     "optional" : true,
-    "value" : "=[{}]",
+    "value" : "=[{name:'param', type:'type', value:'value'}]",
+    "constraints" : {
+      "notEmpty" : false,
+      "pattern" : {
+        "value" : "\\[\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*})*]",
+        "message" : "must be an array list with each entry having 'name', 'type' and 'value' keys"
+      }
+    },
     "feel" : "optional",
     "group" : "default",
     "binding" : {
@@ -100,7 +107,14 @@
     "label" : "importing parameter",
     "description" : "which variables the module/BAPI returns should be picked up",
     "optional" : true,
-    "value" : "=[{}]",
+    "value" : "=[{name:'param', type:'type'}]",
+    "constraints" : {
+      "notEmpty" : false,
+      "pattern" : {
+        "value" : "\\[\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*})*]",
+        "message" : "must be an array list with each entry having 'name' and 'type' keys"
+      }
+    },
     "feel" : "optional",
     "group" : "default",
     "binding" : {
@@ -113,7 +127,14 @@
     "label" : "changing parameter",
     "description" : "which variables the module/BAPI receives and returns should be processed",
     "optional" : true,
-    "value" : "=[{}]",
+    "value" : "=[{name:'param', type:'type', value:'value'}]",
+    "constraints" : {
+      "notEmpty" : false,
+      "pattern" : {
+        "value" : "\\[\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*})*]",
+        "message" : "must be an array list with each entry having 'name', 'type' and (optional) 'value' keys"
+      }
+    },
     "feel" : "optional",
     "group" : "default",
     "binding" : {
@@ -131,7 +152,14 @@
     "label" : "tables parameter",
     "description" : "which tables the module/BAPI receives and returns should be managed,\n for RETURN table BAPIRET2, set 'isReturn' to true",
     "optional" : true,
-    "value" : "=[{}]",
+    "value" : "=[{name:'table', type: 'some_type'},{name:'BAPIRET2', isReturn:true}]",
+    "constraints" : {
+      "notEmpty" : false,
+      "pattern" : {
+        "value" : "\\[\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)\\}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)})*]",
+        "message" : "must be an array list with each entry having 'name'; type and isReturn are mutually exclusive"
+      }
+    },
     "feel" : "optional",
     "group" : "default",
     "binding" : {
