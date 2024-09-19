@@ -32,7 +32,7 @@ public record RFCConnectorRequest(
             defaultValue = "=[{name:'param', type:'type', value:'value'}]")
         @Pattern(
             regexp =
-                "\\[\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*})*]",
+                "\\s*\\[\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*,\\s*value\\s*:\\s*.*?\\s*})*\\s*]",
             message =
                 "must be an array list with each entry having 'name', 'type' and 'value' keys")
         Exporting[] exporting,
@@ -44,7 +44,7 @@ public record RFCConnectorRequest(
             defaultValue = "=[{name:'param', type:'type'}]")
         @Pattern(
             regexp =
-                "\\[\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*})*]",
+                "\\s*\\[\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*}(,\\s*\\{\\s*name\\s*:\\s*.*?\\s*,\\s*type\\s*:\\s*.*?\\s*})*\\s*]",
             message = "must be an array list with each entry having 'name' and 'type' keys")
         Importing[] importing,
     @TemplateProperty(
@@ -58,7 +58,7 @@ public record RFCConnectorRequest(
                 @TemplateProperty.PropertyCondition(property = "moduleType", equals = "rfm"))
         @Pattern(
             regexp =
-                "\\[\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*})*]",
+                "\\s*\\[\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*type\\s*:\\s*\".*?\"(\\s*,\\s*value\\s*:\\s*\".*?\")?\\s*})*\\s*]",
             message =
                 "must be an array list with each entry having 'name', 'type' and (optional) 'value' keys")
         Changing[] changing,
@@ -71,7 +71,7 @@ public record RFCConnectorRequest(
             defaultValue = "=[{name:'table', type: 'some_type'},{name:'BAPIRET2', isReturn:true}]")
         @Pattern(
             regexp =
-                "\\[\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)\\}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)})*]",
+                "\\s*\\[\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)\\s*}(,\\s*\\{\\s*name\\s*:\\s*\".*?\"\\s*,\\s*(type\\s*:\\s*\".*?\"\\s*|isReturn\\s*:\\s*true\\s*)})*\\s*]",
             message =
                 "must be an array list with each entry having 'name'; type and isReturn are mutually exclusive")
         Tables[] tables) {}
