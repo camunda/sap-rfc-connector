@@ -1,0 +1,13 @@
+# SAP RFC Connector
+
+This project provides a Camunda connector for SAP RFC (Remote Function Calls) to BAPIs (Business Application Programming Interface) and RFM (remote-enabled Function Modules). It allows you to interact with SAP systems by sending and receiving data through RFC.
+
+The reason that this Connector is not distributed as a Docker image like other Camunda Connectors is a technical requirement: the SAP Java Connector (JCo) needs to be installed on the system where the Connector is running. This is not possible due to license restrictions within a redistributable Docker image. That's why you need to deploy the Connector as a Java application on Cloud Foundry.
+
+## How to use it
+
+- configure a BTP destination of type "RFC" to your SAP system
+- configure the Spring Boot basis application of the Connector (see `src/main/resources/application.properties`)
+- deploy as Java application on Cloud Foundry (-> see `mta.yaml.example`)
+- import the Element Template into your Camunda Modeler environment (see `element-templates/sap-rfc-connector.json`)
+- use the Element Template in your BPMN process ("SAP RFC Connector") and observe jobs dispatched to your Connector on Cloud Foundry
