@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.camunda.connector.api.error.ConnectorInputException;
 import io.camunda.connector.sap.rfc.model.*;
-import io.camunda.connector.sap.rfc.model.RFCConnectorRequest.*;
 import io.camunda.connector.sap.rfc.model.validator.CustomValidationProvider;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
