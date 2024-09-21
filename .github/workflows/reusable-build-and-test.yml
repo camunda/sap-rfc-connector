@@ -1,0 +1,31 @@
+name: reusable-build-and-test
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        required: true
+        type: string
+      distribution:
+        required: true
+        type: string
+      maven-options:
+        required: true
+        type: string
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up jdk ${{ inputs.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: ${{ inputs.distribution }}
+          cache: maven
+
+      - name: build and test with maven
+        run: mvn -B ${{ inputs.maven-options }} --file pom.xml
