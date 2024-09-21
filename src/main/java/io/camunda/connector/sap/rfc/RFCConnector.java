@@ -51,6 +51,9 @@ public class RFCConnector implements OutboundConnectorFunction {
 
   @Override
   public Object execute(OutboundConnectorContext context) {
+    // note: a custom validator is registered via SPI (see META-INF/services)
+    // in place of the default validator usage in .bindVariables
+    // b/c @Pattern regex annotation doesn't account for anything but Strings
     RFCConnectorRequest request = context.bindVariables(RFCConnectorRequest.class);
     return executeRequest(request);
   }
