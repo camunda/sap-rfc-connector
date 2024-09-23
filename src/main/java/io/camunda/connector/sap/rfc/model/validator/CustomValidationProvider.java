@@ -4,6 +4,7 @@ import io.camunda.connector.api.error.ConnectorInputException;
 import io.camunda.connector.api.validation.ValidationProvider;
 import io.camunda.connector.sap.rfc.model.RFCConnectorRequest;
 import jakarta.validation.ValidationException;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -71,7 +72,7 @@ public class CustomValidationProvider implements ValidationProvider {
                 "every entry of the tables parameter must have a name and type or a name and 'isReturn': true!"));
       }
       if (Arrays.stream(request.tables())
-          .anyMatch(t -> t.name() != null && t.type() != null && t.isReturn())) {
+          .anyMatch(t -> t.name() != null && t.type() != null && Boolean.TRUE.equals(t.isReturn()))) {
         throw new ConnectorInputException(
             new ValidationException(
                 "tables parameter can either have a name and type or a name and 'isReturn': true!"));
