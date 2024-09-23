@@ -7,6 +7,7 @@ import com.sap.cloud.sdk.s4hana.connectivity.rfc.AbstractRemoteFunctionRequest;
 import com.sap.cloud.sdk.s4hana.connectivity.rfc.AbstractRemoteFunctionRequestResult;
 import com.sap.cloud.sdk.s4hana.connectivity.rfc.BapiRequest;
 import com.sap.cloud.sdk.s4hana.connectivity.rfc.RfmRequest;
+import com.sap.conn.jco.JCoRuntimeException;
 import io.camunda.connector.api.annotation.OutboundConnector;
 import io.camunda.connector.api.error.ConnectorException;
 import io.camunda.connector.api.outbound.OutboundConnectorContext;
@@ -101,6 +102,12 @@ public class RFCConnector implements OutboundConnectorFunction {
           ErrorCodes.REQUEST_EXECUTION_ERROR.name(),
           buildErrorMsg(e, "Request execution error: "),
           e);
+    } catch (JCoRuntimeException e) {
+      throw new ConnectorException(
+          ErrorCodes.JCO_RUNTIME_ERROR.name(), buildErrorMsg(e, "JCo runtime error: "), e);
+    } catch (Exception e) {
+      throw new ConnectorException(
+          ErrorCodes.GENERIC_ERROR.name(), buildErrorMsg(e, "Unknown error: "), e);
     }
   }
 

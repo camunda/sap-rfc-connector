@@ -27,5 +27,8 @@ jobs:
           distribution: ${{ inputs.distribution }}
           cache: maven
 
+      - name: install the jco library
+        run: mvn install:install-file -Dfile=sapjco3.jar -DgroupId=com.sap.conn.jco -DartifactId=com.sap.conn.jco.sapjco3 -Dversion=3.1.10 -Dpackaging=jar
+
       - name: build and test with maven
         run: mvn -B ${{ inputs.maven-options }} --file pom.xml
