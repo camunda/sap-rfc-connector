@@ -75,12 +75,13 @@
       <version>${version.cloud-sdk}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.sap.conn.jco</groupId>
-      <artifactId>com.sap.conn.jco.sapjco3</artifactId>
-      <version>${version.sap-jco}</version>
-      <scope>provided</scope>
-    </dependency>
+<!--    comment this is for dev-time and provide the file in proj/classpath -->
+<!--    <dependency>-->
+<!--      <groupId>com.sap.conn.jco</groupId>-->
+<!--      <artifactId>com.sap.conn.jco.sapjco3</artifactId>-->
+<!--      <version>${version.sap-jco}</version>-->
+<!--      <scope>provided</scope>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>com.sap.cloud.sdk.s4hana</groupId>
