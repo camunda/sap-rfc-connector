@@ -70,5 +70,4 @@ node_modules
 
 # SAP JCo artifacts
 *.jcoDestination
-sapjco3.jar
 libsapjco3.dylib
