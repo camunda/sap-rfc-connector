@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <springProfile name="cloud">
+    <springProperty name="connectorsLogAppender" source="connectors.log.appender"
+                    defaultValue="default" />
+    <appender name="STDOUT-JSON" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder class="com.sap.hcp.cf.logback.encoder.JsonEncoder" />
+    </appender>
+    <root level="INFO">
+      <appender-ref ref="STDOUT-JSON" />
+    </root>
+  </springProfile>
+  <springProfile name="!cloud">
+    <springProperty name="connectorsLogAppender" source="connectors.log.appender"
+                    defaultValue="default" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+    <root level="INFO">
+      <appender-ref ref="CONSOLE" />
+    </root>
+  </springProfile>
+</configuration>

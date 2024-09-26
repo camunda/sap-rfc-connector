@@ -1,6 +1,6 @@
 _schema-version: 3.3.0
 ID: sap-rfc-connector
-version: 1.0.0-alpha.1
+version: 1.0.0-alpha.3
 description: "Camunda RFC protocol outbound Connector"
 parameters:
   enable-parallel-deployments: true
@@ -21,6 +21,7 @@ modules:
     properties:
       USE_JCO: true
       JBP_CONFIG_SAP_MACHINE_JRE: "{ version: 21.+ }"
+      SPRING_PROFILES_ACTIVE: cloud
 
       ZEEBE_CLIENT_CLOUD_CLUSTERID: 'guid'
       ZEEBE_CLIENT_CLOUD_CLIENTID: 'xxx'
