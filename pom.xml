@@ -16,8 +16,9 @@
   <description>Camunda RFC protocol outbound Connector</description>
   <groupId>io.camunda.connector.sap.rfc</groupId>
   <artifactId>rfc</artifactId>
-  <version>1.0.0-alpha.1</version>
-  <packaging>jar</packaging>
+  <version>1.0.0-alpha.3</version>
+<!--  necessary for SAP BTP cf to pick up SAP's JCo lib -->
+  <packaging>war</packaging>
 
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
@@ -33,7 +34,6 @@
     <version.mockito>5.11.0</version.mockito>
     <version.slf4j>2.0.12</version.slf4j>
     <version.cloud-sdk>5.10.0</version.cloud-sdk>
-    <version.sap-jco>3.1.10</version.sap-jco>
 
     <version.spring-boot>3.3.3</version.spring-boot>
     <version.spring-boot-starter-camunda>8.5.6</version.spring-boot-starter-camunda>
@@ -54,10 +54,46 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- SAP BTP cf related artifacts -->
+      <dependency>
+        <groupId>com.sap.cloud.sjb.cf</groupId>
+        <artifactId>cf-tomee7-bom</artifactId>
+        <version>2.13.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.sap.cloud.sdk</groupId>
+        <artifactId>sdk-bom</artifactId>
+        <version>${version.cloud-sdk}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- SAP BTP cf: Work around error in Buildpack BOM -->
+      <dependency>
+        <groupId>org.codehaus.woodstox</groupId>
+        <artifactId>stax2-api</artifactId>
+        <scope>compile</scope>
+      </dependency>
+      <!-- SAP BTP cf: Set Spring Boot Tomcat dependencies to provided -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+        <scope>provided</scope>
+      </dependency>
+
+
       <!-- Spring Boot BOM -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+          </exclusion>
+        </exclusions>
         <version>${version.spring-boot}</version>
         <scope>import</scope>
         <type>pom</type>
@@ -75,11 +111,19 @@
       <version>${version.cloud-sdk}</version>
     </dependency>
 
-    <!--    this needs local installation -->
+<!--    <dependency>-->
+<!--      <groupId>com.sap.conn.jco</groupId>-->
+<!--      <artifactId>com.sap.conn.jco.sapjco3</artifactId>-->
+<!--      <version>${version.sap-jco}</version>-->
+<!--      <scope>provided</scope>-->
+<!--    </dependency>-->
+
+    <!-- for SAP BTP cf, this is provided by the platform -->
+    <!-- needs local installation for dev time-->
     <dependency>
-      <groupId>com.sap.conn.jco</groupId>
-      <artifactId>com.sap.conn.jco.sapjco3</artifactId>
-      <version>${version.sap-jco}</version>
+      <groupId>com.sap.cloud</groupId>
+      <artifactId>neo-java-web-api</artifactId>
+      <version>[3.71.8,4.0.0)</version>
       <scope>provided</scope>
     </dependency>
 
@@ -212,6 +256,15 @@
         <version>${plugin.version.maven-jar-plugin}</version>
         <configuration>
           <useDefaultManifestFile>false</useDefaultManifestFile>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <!-- use latest version here -->
+        <version>3.4.0</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
       <plugin>
@@ -354,9 +407,6 @@
             <goals>
               <goal>repackage</goal>
             </goals>
-            <!--            <configuration>-->
-            <!--              <classifier>exec</classifier>-->
-            <!--            </configuration>-->
           </execution>
         </executions>
       </plugin>
