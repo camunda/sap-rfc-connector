@@ -1,6 +1,6 @@
 _schema-version: 3.3.0
 ID: sap-rfc-connector
-version: 1.0.0-alpha.3
+version: 1.0.0-alpha.4
 description: "Camunda RFC protocol outbound Connector"
 parameters:
   enable-parallel-deployments: true
