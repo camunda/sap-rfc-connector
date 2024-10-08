@@ -1,6 +1,6 @@
 _schema-version: 3.3.0
 ID: sap-rfc-connector
-version: 1.0.0-alpha.1
+version: 1.0.0-alpha.4
 description: "Camunda RFC protocol outbound Connector"
 parameters:
   enable-parallel-deployments: true
@@ -21,6 +21,7 @@ modules:
     properties:
       USE_JCO: true
       JBP_CONFIG_SAP_MACHINE_JRE: "{ version: 21.+ }"
+      SPRING_PROFILES_ACTIVE: cloud
 
       ZEEBE_CLIENT_CLOUD_CLUSTERID: 'guid'
       ZEEBE_CLIENT_CLOUD_CLIENTID: 'xxx'
@@ -36,13 +37,22 @@ modules:
       builder: custom
       commands:
         - mvn clean package -DskipTests=true
-      build-result: target/rfc-*.jar
+      build-result: target/rfc-*.war
 
     requires:
+      - name: uaa-instance
       - name: destination-instance
       - name: conn-instance
 
 resources:
+  - name: uaa-instance
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      config:
+        xsappname: sap-rfc-connector
+        tenant-mode: dedicated
   - name: destination-instance
     type: org.cloudfoundry.managed-service
     parameters:
