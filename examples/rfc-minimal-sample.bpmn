@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0fmlc7l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <bpmn:process id="Process_1j6rnj3" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0xq5nsn</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0xq5nsn" sourceRef="StartEvent_1" targetRef="Activity_03oslhk" />
+    <bpmn:endEvent id="Event_04jl9wd">
+      <bpmn:incoming>Flow_1czbcex</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1czbcex" sourceRef="Activity_03oslhk" targetRef="Event_04jl9wd" />
+    <bpmn:serviceTask id="Activity_03oslhk" name="BAPI_COSTCENTER_GETLIST1" zeebe:modelerTemplate="io.camunda.connector.sap.rfc.outbound.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF85OF8xMDc5KSI+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMV85OF8xMDc5KSI+CjxwYXRoIGQ9Ik01MTIuNzUgMjU4SC0wLjI1VjUxMkgyNTkuMDY5IiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfOThfMTA3OSkiLz4KPHBhdGggZD0iTTI1My40MzEgMzA4LjhWNDI4LjQ2MkwyMDkuNDYgMzA4LjhIMTY1LjQ4OEwxMjguMjgyIDQwOC4xNDJDMTIzLjc3MiAzODMuMzA3IDk3LjgzOTkgMzc0LjI3NiA3Ny41NDU0IDM2Ny41MDJDNjQuMDE1NyAzNjIuOTg3IDQ5LjM1ODYgMzU3LjM0MiA0OS4zNTg2IDM0OS40NEM0OS4zNTg2IDM0My43OTYgNTcuMjUwOSAzMzguMTUxIDcxLjkwODEgMzM5LjI4QzgyLjA1NTMgMzQwLjQwOSA5MS4wNzUxIDM0MC40MDkgMTA5LjExNSAzNDkuNDRMMTI3LjE1NCAzMTguOTZDMTEwLjI0MiAzMDkuOTI5IDg3LjY5MjcgMzA1LjQxMyA2OS42NTMxIDMwNS40MTNDNDguMjMxMSAzMDUuNDEzIDMwLjE5MTYgMzEyLjE4NyAxOC45MTY4IDMyMy40NzZDMTEuMDI0NSAzMzEuMzc4IDcuNjQyMTIgMzQxLjUzOCA2LjUxNDY1IDM1Mi44MjdDNi41MTQ2NSAzNjguNjMxIDEyLjE1MiAzNzkuOTIgMjQuNTU0MiAzODguOTUxQzM0LjcwMTUgMzk1LjcyNCA0Ny4xMDM3IDQwMC4yNCA1OC4zNzg0IDQwMy42MjdDNzMuMDM1NSA0MDguMTQyIDg0LjMxMDMgNDEyLjY1OCA4NC4zMTAzIDQyMC41NkM4My4xODI4IDQzMC43MiA3MS45MDgxIDQzMi45NzggNjQuMDE1NyA0MzIuOTc4QzUwLjQ4NjEgNDM0LjEwNyAzOS4yMTE0IDQzMS44NDkgMjIuMjk5MyA0MjEuNjg5TDYuNTE0NjUgNDUyLjE2OUMyMy40MjY3IDQ2Mi4zMjkgNDEuNDY2MyA0NjYuODQ0IDYyLjg4ODMgNDY2Ljg0NEM3Ny41NDU0IDQ2Ni44NDQgMTAwLjA5NSA0NjIuMzI5IDExMi40OTcgNDUxLjA0TDExMC4yNDIgNDYxLjJIMTUzLjA4NkwxNjAuOTc4IDQ0Mi4wMDlDMTc3Ljg5IDQ0Ni41MjQgMTk3LjA1OCA0NDcuNjUzIDIxMy45NyA0NDIuMDA5TDIxOS42MDcgNDYxLjJIMjk2LjI3NVY0MTYuMDQ0SDMxMi4wNkMzNTEuNTIxIDQxNi4wNDQgMzc1LjE5OCAzOTYuODUzIDM3NS4xOTggMzYyLjk4N0MzNzUuMTk4IDMyNC42MDQgMzUyLjY0OSAzMDguOCAzMDQuMTY3IDMwOC44SDI1My40MzFaTTE3MS4xMjYgNDA4LjE0MkwxODYuOTEgMzU3LjM0MkgxODguMDM4TDIwMy44MjIgNDA4LjE0MkMxOTIuNTQ4IDQxMS41MjkgMTgxLjI3MyA0MTEuNTI5IDE3MS4xMjYgNDA4LjE0MlpNMjk2LjI3NSAzODIuMTc4VjM0MS41MzhIMzA3LjU1QzMyMi4yMDcgMzQxLjUzOCAzMzMuNDgyIDM0Ni4wNTMgMzMzLjQ4MiAzNjAuNzI5QzMzMy40ODIgMzc2LjUzMyAzMjIuMjA3IDM4Mi4xNzggMzA3LjU1IDM4Mi4xNzhIMjk2LjI3NVoiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHJlY3QgeD0iNDkxLjY5MiIgeT0iMjEuMDU4MyIgd2lkdGg9IjE2OS44ODMiIGhlaWdodD0iOTMuODgzMyIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgNDkxLjY5MiAyMS4wNTgzKSIgZmlsbD0iIzg5RDFGRiIgc3Ryb2tlPSIjMDE1N0FDIiBzdHJva2Utd2lkdGg9IjQyLjExNjciLz4KPHJlY3QgeD0iMzAzLjY5MiIgeT0iMTkwLjk0MiIgd2lkdGg9IjkzLjg4MzMiIGhlaWdodD0iMTY5Ljg4MyIgdHJhbnNmb3JtPSJyb3RhdGUoLTE4MCAzMDMuNjkyIDE5MC45NDIpIiBmaWxsPSIjODlEMUZGIiBzdHJva2U9IiMwMDcwRjIiIHN0cm9rZS13aWR0aD0iNDIuMTE2NyIvPgo8cmVjdCB4PSIxMTUuNjkyIiB5PSIyMS4wNTgzIiB3aWR0aD0iMTY5Ljg4MyIgaGVpZ2h0PSI5My44ODMzIiB0cmFuc2Zvcm09InJvdGF0ZSg5MCAxMTUuNjkyIDIxLjA1ODMpIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlEMUZGIiBzdHJva2Utd2lkdGg9IjQyLjExNjciLz4KPGxpbmUgeDE9IjczIiB5MT0iMTA5IiB4Mj0iNDM5IiB5Mj0iMTA5IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjE2IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBzdHJva2UtZGFzaGFycmF5PSIxIDM3Ii8+CjwvZz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl85OF8xMDc5IiB4MT0iLTAuMjUiIHkxPSIyNTgiIHgyPSItMC4yNSIgeTI9IjUxMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDBBQUVFIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzAwNTVBQSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzk4XzEwNzkiPgo8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPGNsaXBQYXRoIGlkPSJjbGlwMV85OF8xMDc5Ij4KPHJlY3Qgd2lkdGg9IjUxMyIgaGVpZ2h0PSIyNTQiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMC4yNSAyNTgpIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sap:rfc:outbound:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="ecc" target="destination" />
+          <zeebe:input source="bapi" target="moduleType" />
+          <zeebe:input source="BAPI_COSTCENTER_GETLIST1" target="moduleName" />
+          <zeebe:input source="=[{&#10;  name: &#34;CONTROLLINGAREA&#34;, &#10;  type: &#34;BAPI0012_GEN-CO_AREA&#34;, &#10;  value: &#34;1000&#34;&#10;}&#10;]" target="exporting" />
+          <zeebe:input source="=[&#10;  {&#10;    name: &#34;COSTCENTERLIST&#34;,&#10;    type: &#34;BAPI0012_CCLIST&#34;&#10;  },&#10;  {&#10;    name: &#34;BAPIRET2&#34;,&#10;    isReturn: true&#10;  }&#10;]" target="tables" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="CostCenter" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xq5nsn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1czbcex</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1j6rnj3">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04jl9wd_di" bpmnElement="Event_04jl9wd">
+        <dc:Bounds x="432" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06riizx_di" bpmnElement="Activity_03oslhk">
+        <dc:Bounds x="259" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0xq5nsn_di" bpmnElement="Flow_0xq5nsn">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="259" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1czbcex_di" bpmnElement="Flow_1czbcex">
+        <di:waypoint x="359" y="117" />
+        <di:waypoint x="432" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
