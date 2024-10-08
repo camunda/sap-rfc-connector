@@ -36,15 +36,23 @@ modules:
     build-parameters:
       builder: custom
       commands:
-        - mvn install:install-file -Dfile=sapjco3.jar -DgroupId=com.sap.conn.jco -DartifactId=com.sap.conn.jco.sapjco3 -Dversion=3.1.10 -Dpackaging=jar
         - mvn clean package -DskipTests=true
-      build-result: target/rfc-*.jar
+      build-result: target/rfc-*.war
 
     requires:
+      - name: uaa-instance
       - name: destination-instance
       - name: conn-instance
 
 resources:
+  - name: uaa-instance
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      config:
+        xsappname: sap-rfc-connector
+        tenant-mode: dedicated
   - name: destination-instance
     type: org.cloudfoundry.managed-service
     parameters:
