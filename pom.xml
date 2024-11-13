@@ -32,7 +32,7 @@
     <version.assertj>3.25.3</version.assertj>
     <version.junit-jupiter>5.11.0</version.junit-jupiter>
     <version.mockito>5.11.0</version.mockito>
-    <version.slf4j>2.0.12</version.slf4j>
+    <version.slf4j>2.0.16</version.slf4j>
     <version.cloud-sdk>5.10.0</version.cloud-sdk>
 
     <version.spring-boot>3.3.3</version.spring-boot>
