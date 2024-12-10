@@ -62,6 +62,7 @@ build/
 .env
 request*.json
 mta.yaml
+mtad.yaml
 mta_archives
 .java-version
 
