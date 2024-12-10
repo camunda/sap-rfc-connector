@@ -8,6 +8,6 @@ The reason that this Connector is not distributed as a Docker image like other C
 
 - configure a BTP destination of type "RFC" to your SAP system
 - configure the Spring Boot basis application of the Connector (see `src/main/resources/application.properties`)
-- deploy as Java application on Cloud Foundry (-> see `mta.yaml.example`)
+- deploy as Java application on Cloud Foundry (-> see `mta(d).yaml.example`)
 - import the Element Template into your Camunda Modeler environment (see `element-templates/sap-rfc-connector.json`)
 - use the Element Template in your BPMN process ("SAP RFC Connector") and observe jobs dispatched to your Connector on Cloud Foundry

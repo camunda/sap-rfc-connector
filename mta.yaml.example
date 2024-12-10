@@ -40,12 +40,12 @@ modules:
       build-result: target/rfc-*.war
 
     requires:
-      - name: uaa-instance
-      - name: destination-instance
-      - name: conn-instance
+      - name: uaa-camunda-rfc-connector
+      - name: dest-camunda-rfc-connector
+      - name: conn-camunda-rfc-connector
 
 resources:
-  - name: uaa-instance
+  - name: uaa-camunda-rfc-connector
     type: org.cloudfoundry.managed-service
     parameters:
       service: xsuaa
@@ -53,12 +53,12 @@ resources:
       config:
         xsappname: sap-rfc-connector
         tenant-mode: dedicated
-  - name: destination-instance
+  - name: dest-camunda-rfc-connector
     type: org.cloudfoundry.managed-service
     parameters:
       service: destination
       service-plan: lite
-  - name: conn-instance
+  - name: conn-camunda-rfc-connector
     type: org.cloudfoundry.managed-service
     parameters:
       service: connectivity
