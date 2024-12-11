@@ -1,0 +1,49 @@
+name: reusable-build-and-test
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        required: true
+        type: string
+      distribution:
+        required: true
+        type: string
+      maven-options:
+        required: true
+        type: string
+      spring_profile:
+        type: string
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up jdk ${{ inputs.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: ${{ inputs.distribution }}
+          cache: maven
+          echo "content of src/test/resources: $(ls -al ./src/test/resources)"
+
+      # this runs w/ the deployed (!) connector
+      # against c8 saas
+      # and s4
+      - name: e2e tests (deployed connector, against c8 + s4)
+        env:
+          e2e: true
+          clusterId: ${{ secrets.C85_CLUSTER_ID }}
+          clientId: ${{ secrets.C85_CLIENT_ID }}
+          clientSecret: ${{ secrets.C85_CLIENT_SECRET }}
+          region: ${{ secrets.C85_REGION }}
+        run: |
+          rm ./src/test/resources/application.properties 
+          # so we're sourcing the right c8 saas props for the e2e test
+          echo "content of src/test/resources: $(ls -al ./src/test/resources)"
+          # by env var e2e, only the respective tests are run
+          mvn ${{ inputs.maven-options }} test
+          

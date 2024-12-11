@@ -65,6 +65,8 @@ mta.yaml
 mtad.yaml
 mta_archives
 .java-version
+examples/.camunda
+src/test/resources/.camunda
 
 # node test artifacts
 node_modules
