@@ -16,7 +16,7 @@
   <description>Camunda RFC protocol outbound Connector</description>
   <groupId>io.camunda.connector.sap.rfc</groupId>
   <artifactId>rfc</artifactId>
-  <version>1.0.0-alpha.4</version>
+  <version>8.5.0</version>
 <!--  necessary for SAP BTP cf to pick up SAP's JCo lib -->
   <packaging>war</packaging>
 
@@ -26,29 +26,31 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- connector SDK version -->
-    <version.connectors>8.5.6</version.connectors>
+    <version.connectors>8.5.10</version.connectors>
 
     <!-- external libraries -->
-    <version.assertj>3.25.3</version.assertj>
-    <version.junit-jupiter>5.11.0</version.junit-jupiter>
-    <version.mockito>5.11.0</version.mockito>
-    <version.slf4j>2.0.12</version.slf4j>
-    <version.cloud-sdk>5.10.0</version.cloud-sdk>
+    <version.assertj>3.26.3</version.assertj>
+    <version.junit-jupiter>5.11.3</version.junit-jupiter>
+    <version.mockito>5.14.2</version.mockito>
+    <version.slf4j>2.0.16</version.slf4j>
+    <version.cloud-sdk>5.12.0</version.cloud-sdk>
 
-    <version.spring-boot>3.3.3</version.spring-boot>
-    <version.spring-boot-starter-camunda>8.5.6</version.spring-boot-starter-camunda>
-    <version.logback>1.5.8</version.logback>
+    <version.spring-boot>3.3.5</version.spring-boot>
+    <version.jackson-databind>2.17.1</version.jackson-databind>
+    <version.spring-boot-starter-camunda>8.5.10</version.spring-boot-starter-camunda>
+    <version.logback>1.5.12</version.logback>
 
 
     <!-- maven plugins -->
-    <plugin.version.maven-clean-plugin>3.3.2</plugin.version.maven-clean-plugin>
+    <plugin.version.maven-clean-plugin>3.4.0</plugin.version.maven-clean-plugin>
     <plugin.version.maven-compiler-plugin>3.13.0</plugin.version.maven-compiler-plugin>
-    <plugin.version.maven-dependency-plugin>3.6.1</plugin.version.maven-dependency-plugin>
-    <plugin.version.maven-install-plugin>3.1.1</plugin.version.maven-install-plugin>
-    <plugin.version.maven-jar-plugin>3.3.0</plugin.version.maven-jar-plugin>
+    <plugin.version.maven-dependency-plugin>3.8.1</plugin.version.maven-dependency-plugin>
+    <plugin.version.maven-install-plugin>3.1.3</plugin.version.maven-install-plugin>
+    <plugin.version.maven-jar-plugin>3.4.2</plugin.version.maven-jar-plugin>
+    <plugin.version.maven-war-plugin>3.4.0</plugin.version.maven-war-plugin>
     <plugin.version.maven-resources-plugin>3.3.1</plugin.version.maven-resources-plugin>
-    <plugin.version.maven-shade-plugin>3.5.2</plugin.version.maven-shade-plugin>
-    <plugin.version.maven-surefire-plugin>3.2.5</plugin.version.maven-surefire-plugin>
+<!--    <plugin.version.maven-shade-plugin>3.5.2</plugin.version.maven-shade-plugin>-->
+    <plugin.version.maven-surefire-plugin>3.5.2</plugin.version.maven-surefire-plugin>
     <plugin.version.spotless-maven-plugin>2.43.0</plugin.version.spotless-maven-plugin>
   </properties>
 
@@ -104,6 +106,13 @@
 
 
   <dependencies>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${version.jackson-databind}</version>
+      <scope>compile</scope>
+    </dependency>
     <!-- connector-specific -->
     <dependency>
       <groupId>com.sap.cloud.sdk</groupId>
@@ -261,8 +270,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <!-- use latest version here -->
-        <version>3.4.0</version>
+        <version>${plugin.version.maven-war-plugin}</version>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>

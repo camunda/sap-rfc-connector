@@ -1,0 +1,93 @@
+name: reusable-deploy
+
+on:
+  workflow_call:
+    inputs:
+      connector_version: # fex: 8.5.7 - 8.5 for Camunda release, 7 for connector version
+        required: true
+        type: string
+      region:
+        required: true
+        type: string
+      cf_api_endpoint:
+        required: true
+        type: string
+      cf_org:
+        required: true
+        type: string
+      cf_space:
+        required: true
+        type: string
+
+jobs:
+  extract-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: extract release branch # first two digits of connector_version
+        run: echo "camunda_release=$(echo ${{ inputs.connector_version }} | cut -d'.' -f1-2)" >> $GITHUB_ENV
+
+#      - name: extract connector version for release # last digit of connector_version
+#        run: echo "connector_version=$(echo ${{ inputs.connector_version }} | cut -d'.' -f3)" >> $GITHUB_ENV
+
+  mtad-yaml: # get the mtad.yaml.example from the release branch via sparse checkout
+    runs-on: ubuntu-latest
+    needs: extract-version
+    steps:
+      - name: checkout mtad.yaml.example
+        uses: actions/checkout@v4
+        with:
+          repository: camunda/sap-odata-connector
+          ref: ${{ env.camunda_release }}
+          path: yaml
+          sparse-checkout: |
+            mtad.yaml.example
+          sparse-checkout-cone-mode: false
+
+      - name: check
+        run: |
+          ls -al .
+          ls -al yaml
+
+      - name: fill in target cluster credentials
+        run: |
+          cd yaml
+          sed -i.bak -e "s/<app-version>/${{ inputs.connector_version }}/g" \
+          -e "s/name: sap-rfc-connector/name: sap-rfc-connector-${{ inputs.connector_version }}/g" \
+          -e "s/<your-cluster-id>/${{ secrets.C85_CLUSTER_ID }}/g" \
+          -e "s/<client-id-credential-from-api-client>/${{ secrets.C85_CLIENT_ID }}/g" \
+          -e "s/<client-secret-credential-from-api-client>/${{ secrets.C85_CLIENT_SECRET }}/g" \
+          -e "s/<your-cluster-region>/${{ inputs.region }}/g" \
+          mtad.yaml.example
+          mv mtad.yaml.example mtad.yaml
+          cd ..
+
+      # no worries: gh marks secrets with *** also when cat'ing files
+      - name: check substitution result
+        run: |
+          ls -al yaml/mtad.yaml
+          cat yaml/mtad.yaml
+
+      - name: Upload mtad.yaml
+        uses: actions/upload-artifact@v4
+        with:
+          name: mtad
+          path: yaml/mtad.yaml
+
+  deploy:
+    needs: mtad-yaml
+    runs-on: ubuntu-latest
+    container:
+      image: cloudfoundry/cli:latest
+
+    steps:
+      - name: download mtad.yaml
+        uses: actions/download-artifact@v4
+        with:
+          name: mtad
+      - name: deploy ${{inputs.connector_version}} to BTP
+        # download-artifact puts the file w/o subdir here
+        run: |
+          cf install-plugin multiapps -f
+          ls -al .
+          cf login -a ${{ inputs.cf_api_endpoint }} -u ${{ secrets.CF_USER }} -p ${{ secrets.CF_PASSWORD }} -o ${{ inputs.cf_org }} -s ${{ inputs.cf_space }}
+          cf deploy ./ -f
