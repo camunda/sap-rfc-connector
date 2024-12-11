@@ -1,4 +1,4 @@
-name: reusable-deploy
+name: reusable-undeploy
 
 on:
   workflow_call:
@@ -17,7 +17,7 @@ on:
         type: string
 
 jobs:
-  deploy:
+  undeploy:
     runs-on: ubuntu-latest
     container:
       image: cloudfoundry/cli:latest
