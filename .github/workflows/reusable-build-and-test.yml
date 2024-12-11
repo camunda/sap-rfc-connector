@@ -12,6 +12,8 @@ on:
       maven-options:
         required: true
         type: string
+      spring_profile:
+        type: string
 
 jobs:
   build-and-test:
@@ -31,4 +33,4 @@ jobs:
         run: mvn install:install-file -Dfile=sapjco3.jar -DgroupId=com.sap.conn.jco -DartifactId=com.sap.conn.jco.sapjco3 -Dversion=3.1.10 -Dpackaging=jar
 
       - name: build and test with maven
-        run: mvn -B ${{ inputs.maven-options }} --file pom.xml
+        run: mvn ${{ inputs.maven-options }} test
