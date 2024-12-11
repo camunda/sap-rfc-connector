@@ -24,7 +24,6 @@ jobs:
 
     steps:
       - name: undeploy ${{inputs.connector_version}} from BTP
-        # download-artifact puts the file w/o subdir here
         run: |
           cf install-plugin multiapps -f
           ls -al .
