@@ -1,23 +1,22 @@
 _schema-version: 3.3.0
-ID: sap-rfc-connector
-description: Camunda RFC protocol outbound Connector
-version: 8.5.0
+ID: sap-rfc-connector-<app-version>
+version: <app-version>
 modules:
   - name: sap-rfc-connector
     type: java.tomcat
-    path: target/rfc-8.5.0.war
+    path: target/rfc-<app-version>.war
     properties:
       JBP_CONFIG_SAP_MACHINE_JRE: '{ version: 21.+ }'
-      LOGGING_LEVEL_COM_SAP_CLOUD_SDK: DEBUG
-      LOGGING_LEVEL_COM_SAP_CORE_CONNECTIVITY_JCO: DEBUG
-      LOGGING_LEVEL_IO_CAMUNDA_CONNECTOR_SAP_RFC: DEBUG
-      LOGGING_LEVEL_ROOT: INFO
+      LOGGING_LEVEL_COM_SAP_CLOUD_SDK: DEBUG # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
+      LOGGING_LEVEL_COM_SAP_CORE_CONNECTIVITY_JCO: DEBUG # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
+      LOGGING_LEVEL_IO_CAMUNDA_CONNECTOR_SAP_RFC: DEBUG # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
+      LOGGING_LEVEL_ROOT: WARN # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
       SPRING_PROFILES_ACTIVE: cloud
       USE_JCO: true
-      ZEEBE_CLIENT_CLOUD_CLIENT_SECRET: xxx
-      ZEEBE_CLIENT_CLOUD_CLIENTID: xxx
-      ZEEBE_CLIENT_CLOUD_CLUSTERID: xxx
-      ZEEBE_CLIENT_CLOUD_REGION: xxx
+      ZEEBE_CLIENT_CLOUD_CLIENT_SECRET: <client-secret-credential-from-api-client>
+      ZEEBE_CLIENT_CLOUD_CLIENTID: <client-id-credential-from-api-client>
+      ZEEBE_CLIENT_CLOUD_CLUSTERID: <your-cluster-id>
+      ZEEBE_CLIENT_CLOUD_REGION: <your-cluster-region>
       CAMUNDA_CONNECTOR_POLLING_ENABLED: false
     requires:
       - name: uaa-camunda-rfc-connector
