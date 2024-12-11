@@ -6,9 +6,6 @@ on:
       connector_version: # fex: 8.5.7 - 8.5 for Camunda release, 7 for connector version
         required: true
         type: string
-      region:
-        required: true
-        type: string
       cf_api_endpoint:
         required: true
         type: string
@@ -56,7 +53,7 @@ jobs:
           -e "s/<your-cluster-id>/${{ secrets.C85_CLUSTER_ID }}/g" \
           -e "s/<client-id-credential-from-api-client>/${{ secrets.C85_CLIENT_ID }}/g" \
           -e "s/<client-secret-credential-from-api-client>/${{ secrets.C85_CLIENT_SECRET }}/g" \
-          -e "s/<your-cluster-region>/${{ inputs.region }}/g" \
+          -e "s/<your-cluster-region>/${{ secrets.C85_REGION }}/g" \
           mtad.yaml.example
           mv mtad.yaml.example mtad.yaml
           cd ..

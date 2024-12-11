@@ -61,7 +61,6 @@ jobs:
     uses: ./.github/workflows/reusable-deploy.yml
     with:
       connector_version: ${{ needs.build.outputs.VERSION }}
-      region: 'bru-2'
       cf_api_endpoint: 'https://api.cf.eu10-004.hana.ondemand.com'
       cf_org: camunda-dev
       cf_space: sap-integration-demo
