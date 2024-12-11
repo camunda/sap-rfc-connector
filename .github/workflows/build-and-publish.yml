@@ -4,17 +4,15 @@ name: build-and-publish
 on:
   push:
     branches:
-      - release/8.5
+      - release/*
     paths:
       # relevant
       - .github/**
       - element-templates/**
       - src/**
-      - Dockerfile
       - pom.xml
       # irrelevant
       - "!.idea/**"
-      - "!cap-bookshop/**"
       - "!examples/**"
       - "!*.java-version"
       - "!*.example"
