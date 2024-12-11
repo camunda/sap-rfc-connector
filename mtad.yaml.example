@@ -31,7 +31,7 @@ modules:
       readiness-health-check-type: http
       routes:
         - protocol: http2
-          route: ${org}-${space}-${app-name}-8.5.${domain}
+          route: ${default-uri}
 resources:
   - name: uaa-camunda-rfc-connector
     type: org.cloudfoundry.managed-service
