@@ -3,13 +3,17 @@ package io.camunda.connector.sap.rfc;
 import io.camunda.zeebe.client.ZeebeClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @EnabledIfEnvironmentVariable(named = "e2e", matches = "true")
-public class e2eTest {
+public class E2eTest {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(E2eTest.class);
 
   ZeebeClient zeebeClient;
 
-  e2eTest() {
+  E2eTest() {
     // the evn vars are set in the github action
     // derived from the repo secrets
     zeebeClient =
@@ -24,6 +28,7 @@ public class e2eTest {
   @Test
   void bapi() {
     zeebeClient.newDeployResourceCommand().addResourceFromClasspath("bapi.bpmn").send().join();
+
     var processInstanceResult =
         zeebeClient
             .newCreateInstanceCommand()
@@ -32,5 +37,7 @@ public class e2eTest {
             .withResult()
             .send()
             .join();
+
+    processInstanceResult.getVariablesAsMap().forEach((k, v) -> LOGGER.debug("{}: {}", k, v));
   }
 }
