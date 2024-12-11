@@ -41,9 +41,6 @@ jobs:
           clientSecret: ${{ secrets.C85_CLIENT_SECRET }}
           region: ${{ secrets.C85_REGION }}
         run: |
-          rm ./src/test/resources/application.properties 
-          # so we're sourcing the right c8 saas props for the e2e test
-          echo "content of src/test/resources: $(ls -al ./src/test/resources)"
           # by env var e2e, only the respective tests are run
           mvn ${{ inputs.maven-options }} test
           
