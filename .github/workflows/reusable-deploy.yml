@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: camunda/sap-rfc-connector
-          ref: release/${{ env.camunda_release }}
+#          ref: release/${{ env.camunda_release }}
           path: yaml
           sparse-checkout: |
             mtad.yaml.example
