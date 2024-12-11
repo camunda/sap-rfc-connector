@@ -38,6 +38,7 @@ public class E2eTest {
             .send()
             .join();
 
-    processInstanceResult.getVariablesAsMap().forEach((k, v) -> LOGGER.debug("{}: {}", k, v));
+    LOGGER.info("//> test run output vars");
+    processInstanceResult.getVariablesAsMap().forEach((k, v) -> LOGGER.info("{}: {}", k, v));
   }
 }
