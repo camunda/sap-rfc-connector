@@ -13,3 +13,12 @@ The reason that this Connector is not distributed as a Docker image like other C
   - `cf deploy ./mta_archive/*.war -f` (for `mta.yaml`)
 - import the Element Template into your Camunda Modeler environment (see `element-templates/sap-rfc-connector.json`)
 - use the Element Template in your BPMN process ("SAP RFC Connector") and observe jobs dispatched to your Connector on Cloud Foundry
+
+## Development
+
+- on PRs
+  - always bump the patch version first in `pom.xml`
+  - don't change major or minor, as they indicate the Camunda 8 release assocation
+&rarr; `sap-rfc-connector-8.5.2` is the version for Camunda 8.5, and the connector version 2
+
+### Testing
