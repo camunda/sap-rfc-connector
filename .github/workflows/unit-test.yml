@@ -1,4 +1,4 @@
-name: test-pr
+name: unit-test
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-test:
-    uses: ./.github/workflows/reusable-build-and-test.yml
+    uses: ./.github/workflows/reusable-unit-test.yml
     with:
       java-version: '21'
       distribution: 'temurin'

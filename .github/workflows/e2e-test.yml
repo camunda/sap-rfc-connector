@@ -1,37 +1,11 @@
-name: build-and-publish
-# - deployment to BTP
+name: e2e-test
 
 on:
-  push:
-    branches:
-      - release/*
-    paths:
-      # relevant
-      - .github/**
-      - element-templates/**
-      - src/**
-      - pom.xml
-      # irrelevant
-      - "!.idea/**"
-      - "!examples/**"
-      - "!*.java-version"
-      - "!*.example"
-      - "!*.md"
+  pull_request:
+    branches: [ "release/*" ]
 
 jobs:
-  unit-test:
-    uses: reusable-unit-test.yml
-    with:
-      java-version: '21'
-      distribution: 'temurin'
-      maven-options: '-PcheckFormat'
-#      spring_profile: 'integration-c85-saas'
-    secrets: inherit
-
-  # run e2e tests again also?
-
   determine-connector-version:
-    needs: unit-test
     runs-on: ubuntu-latest
     outputs:
       VERSION: ${{ steps.scope_version.outputs.VERSION }}
@@ -55,7 +29,6 @@ jobs:
         id: scope_version
         run: echo "VERSION=${{ env.VERSION }}" >> "$GITHUB_OUTPUT"
 
-  # stable version deployment
   deploy-to-btp:
     needs: determine-connector-version
     uses: ./.github/workflows/reusable-deploy.yml
@@ -65,3 +38,22 @@ jobs:
       cf_org: camunda-dev
       cf_space: sap-integration-demo
     secrets: inherit
+
+  e2e:
+    needs: deploy-to-btp
+    uses: ./.github/workflows/reusable-e2e-test.yml
+    with:
+      java-version: '21'
+      distribution: 'temurin'
+      maven-options: ''
+      spring_profile: 'integration-c85-saas'
+
+  undeploy:
+    needs: [ determine-connector-version, e2e ]
+    if: success() || failure()
+    uses: ./.github/workflows/reusable-undeploy.yml
+    with:
+      connector_version: ${{ needs.determine-connector-version.outputs.VERSION }}
+      cf_api_endpoint: 'https://api.cf.eu10-004.hana.ondemand.com'
+      cf_org: camunda-dev
+      cf_space: sap-integration-demo
