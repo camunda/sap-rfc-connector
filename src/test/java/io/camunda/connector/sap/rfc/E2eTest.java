@@ -2,9 +2,9 @@ package io.camunda.connector.sap.rfc;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.camunda.connector.sap.rfc.model.BapiConnectorResponse;
 import io.camunda.zeebe.client.ZeebeClient;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.slf4j.Logger;
@@ -43,8 +43,9 @@ public class E2eTest {
             .join();
 
     var result = processInstanceResult.getVariablesAsMap();
-    BapiConnectorResponse costCenter = (BapiConnectorResponse) result.get("CostCenter");
-    int costCenterListSize = ((ArrayList) costCenter.tables().get("COSTCENTERLIST")).size();
+    LinkedHashMap costCenter = (LinkedHashMap) result.get("CostCenter");
+    LinkedHashMap tables = (LinkedHashMap) costCenter.get("tables");
+    int costCenterListSize = ((ArrayList) tables.get("COSTCENTERLIST")).size();
     assertTrue(costCenterListSize >= 1, costCenterListSize + " cost center returned");
   }
 
