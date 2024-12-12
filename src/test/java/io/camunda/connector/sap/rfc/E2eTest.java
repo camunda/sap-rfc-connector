@@ -1,15 +1,14 @@
 package io.camunda.connector.sap.rfc;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import io.camunda.connector.sap.rfc.model.BapiConnectorResponse;
 import io.camunda.zeebe.client.ZeebeClient;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EnabledIfEnvironmentVariable(named = "e2e", matches = "true")
 public class E2eTest {
@@ -28,7 +27,6 @@ public class E2eTest {
             .withClientSecret(System.getenv("clientSecret"))
             .withRegion(System.getenv("region"))
             .build();
-
   }
 
   @Test
