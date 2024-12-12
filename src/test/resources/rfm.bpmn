@@ -13,7 +13,7 @@
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sap:rfc:outbound:1" retries="3" />
         <zeebe:ioMapping>
-          <zeebe:input source="ecc" target="destination" />
+          <zeebe:input source="ecc-rfc" target="destination" />
           <zeebe:input source="rfm" target="moduleType" />
           <zeebe:input source="RFC_GET_TABLE_ENTRIES" target="moduleName" />
           <zeebe:input source="=[{name:&#34;TABLE_NAME&#34;, type:&#34;X030L-TABNAME&#34;, value:&#34;HRCCE_T_MNWGVAL&#34;}]" target="exporting" />
