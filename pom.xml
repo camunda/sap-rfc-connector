@@ -52,6 +52,8 @@
 <!--    <plugin.version.maven-shade-plugin>3.5.2</plugin.version.maven-shade-plugin>-->
     <plugin.version.maven-surefire-plugin>3.5.2</plugin.version.maven-surefire-plugin>
     <plugin.version.spotless-maven-plugin>2.43.0</plugin.version.spotless-maven-plugin>
+    <plugin.version.maven-exec-maven-plugin>3.5.0</plugin.version.maven-exec-maven-plugin>
+    <plugin.version.maven-spring-boot>3.4.0</plugin.version.maven-spring-boot>
   </properties>
 
   <dependencyManagement>
@@ -237,6 +239,7 @@
         <configuration>
           <mainClass>io.camunda.connector.sap.rfc.ApplicationRuntime</mainClass>
         </configuration>
+        <version>${plugin.version.maven-exec-maven-plugin}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -347,6 +350,7 @@
             </goals>
           </execution>
         </executions>
+        <version>${plugin.version.maven-spring-boot}</version>
       </plugin>
     </plugins>
   </build>
