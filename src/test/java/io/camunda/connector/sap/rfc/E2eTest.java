@@ -65,7 +65,11 @@ public class E2eTest {
             .send()
             .join();
 
-    LOGGER.info("//> rfm result");
-    LOGGER.info(processInstanceResult.getVariablesAsMap().toString());
+    var result = processInstanceResult.getVariablesAsMap();
+    LinkedHashMap tableEntries = (LinkedHashMap) result.get("TableEntries");
+    LinkedHashMap tables = (LinkedHashMap) tableEntries.get("tables");
+    int tableEntriesSize = ((ArrayList) tables.get("ENTRIES")).size();
+    LOGGER.info("//> table entries size: " + tableEntriesSize);
+    assertTrue(tableEntriesSize >= 1, tableEntriesSize + " table entries returned");
   }
 }
