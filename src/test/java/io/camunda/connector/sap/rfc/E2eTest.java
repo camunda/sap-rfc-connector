@@ -47,6 +47,7 @@ public class E2eTest {
     LinkedHashMap costCenter = (LinkedHashMap) result.get("CostCenter");
     LinkedHashMap tables = (LinkedHashMap) costCenter.get("tables");
     int costCenterListSize = ((ArrayList) tables.get("COSTCENTERLIST")).size();
+    LOGGER.info("//> cost center result size: " + costCenterListSize);
     assertTrue(costCenterListSize >= 1, costCenterListSize + " cost center returned");
   }
 
