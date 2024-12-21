@@ -38,7 +38,7 @@
     <version.spring-boot>3.3.5</version.spring-boot>
     <version.jackson-databind>2.17.1</version.jackson-databind>
     <version.spring-boot-starter-camunda>8.5.10</version.spring-boot-starter-camunda>
-    <version.logback>1.5.12</version.logback>
+    <version.logback>1.5.13</version.logback>
 
 
     <!-- maven plugins -->
