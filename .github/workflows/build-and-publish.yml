@@ -76,3 +76,5 @@ jobs:
           tag: ${{ needs.determine-connector-version.outputs.VERSION }}
           release_name: ${{ needs.determine-connector-version.outputs.VERSION }}
           release_body: "Release ${{ needs.determine-connector-version.outputs.VERSION }}"
+          allowUpdates: 'true'
+          removeArtifacts: 'true'
