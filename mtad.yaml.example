@@ -1,5 +1,5 @@
 _schema-version: 3.3.0
-ID: sap-rfc-connector-<app-version>
+ID: sap-rfc-connector-<mangled-version>
 version: <app-version>
 modules:
   - name: sap-rfc-connector
@@ -31,14 +31,14 @@ modules:
       readiness-health-check-type: http
       routes:
         - protocol: http2
-          route: ${org}-${space}-${app-name}-8.5.${domain}
+          route: ${default-uri}
 resources:
   - name: uaa-camunda-rfc-connector
     type: org.cloudfoundry.managed-service
     parameters:
       config:
         tenant-mode: dedicated
-        xsappname: sap-rfc-connector
+        xsappname: sap-rfc-connector-<mangled-version>
       service: xsuaa
       service-plan: application
   - name: dest-camunda-rfc-connector
