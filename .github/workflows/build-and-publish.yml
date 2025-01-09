@@ -19,7 +19,7 @@ on:
 
 jobs:
   unit-test:
-    uses: reusable-unit-test.yml
+    uses: ./.github/workflows/reusable-unit-test.yml
     with:
       java-version: '21'
       distribution: 'temurin'
