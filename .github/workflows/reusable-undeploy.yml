@@ -1,4 +1,4 @@
-name: reusable-deploy
+name: reusable-undeploy
 
 on:
   workflow_call:
@@ -17,14 +17,13 @@ on:
         type: string
 
 jobs:
-  deploy:
+  undeploy:
     runs-on: ubuntu-latest
     container:
       image: cloudfoundry/cli:latest
 
     steps:
       - name: undeploy ${{inputs.connector_version}} from BTP
-        # download-artifact puts the file w/o subdir here
         run: |
           cf install-plugin multiapps -f
           ls -al .

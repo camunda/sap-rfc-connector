@@ -36,7 +36,7 @@ jobs:
       connector_version: ${{ needs.determine-connector-version.outputs.VERSION }}
       cf_api_endpoint: 'https://api.cf.eu10-004.hana.ondemand.com'
       cf_org: camunda-dev
-      cf_space: sap-integration-demo
+      cf_space: sap-integration
     secrets: inherit
 
   e2e:
@@ -47,6 +47,7 @@ jobs:
       distribution: 'temurin'
       maven-options: ''
       spring_profile: 'integration-c85-saas'
+    secrets: inherit
 
   undeploy:
     needs: [ determine-connector-version, e2e ]
@@ -56,4 +57,5 @@ jobs:
       connector_version: ${{ needs.determine-connector-version.outputs.VERSION }}
       cf_api_endpoint: 'https://api.cf.eu10-004.hana.ondemand.com'
       cf_org: camunda-dev
-      cf_space: sap-integration-demo
+      cf_space: sap-integration
+    secrets: inherit
