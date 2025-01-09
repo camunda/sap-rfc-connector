@@ -69,7 +69,7 @@ jobs:
         run: mvn clean package
 
   create-release:
-    needs: build
+    needs: [ determine-connector-version, build ]
     runs-on: ubuntu-latest
 
     steps:
@@ -81,8 +81,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.VERSION }}
-          release_name: Release ${{ env.VERSION }}
+          tag_name: ${{ needs.determine-connector-version.outputs.VERSION }}
+          release_name: Release ${{ needs.determine-connector-version.outputs.VERSION }}
           draft: false
           prerelease: false
 
