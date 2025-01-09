@@ -51,7 +51,7 @@ jobs:
         id: scope_version
         run: echo "VERSION=${{ env.VERSION }}" >> "$GITHUB_OUTPUT"
 
-  build:
+  build-and-gh_release:
     needs: determine-connector-version
     runs-on: ubuntu-latest
 
@@ -65,43 +65,14 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build project
+      - name: build project
         run: mvn clean package
 
-  create-release:
-    needs: [ determine-connector-version, build ]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: create github release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: create release
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ needs.determine-connector-version.outputs.VERSION }}
-          release_name: Release ${{ needs.determine-connector-version.outputs.VERSION }}
-          draft: false
-          prerelease: false
-
-      - name: upload war file
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/rfc-*.war
-          asset_name: rfc-connector.war
-          asset_content_type: application/zip
-
-      - name: upload element templates
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: element-templates/sap-rfc-connector.json
-          asset_name: sap-rfc-connector.json
-          asset_content_type: application/json
+          artifacts: "target/*.war,element-templates/*.json"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ needs.determine-connector-version.outputs.VERSION }}
+          release_name: ${{ needs.determine-connector-version.outputs.VERSION }}
+          release_body: "Release ${{ needs.determine-connector-version.outputs.VERSION }}"
