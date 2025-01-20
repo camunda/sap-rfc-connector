@@ -71,7 +71,7 @@ jobs:
       - name: create release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "target/*.war,element-templates/*.json"
+          artifacts: "target/*.war,element-templates/*.json,mtad.yaml.example"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ needs.determine-connector-version.outputs.VERSION }}
           release_name: ${{ needs.determine-connector-version.outputs.VERSION }}
