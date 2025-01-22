@@ -16,7 +16,7 @@
   <description>Camunda RFC protocol outbound Connector</description>
   <groupId>io.camunda.connector.sap.rfc</groupId>
   <artifactId>rfc</artifactId>
-  <version>8.5.1</version>
+  <version>8.6.0</version>
 <!--  necessary for SAP BTP cf to pick up SAP's JCo lib -->
   <packaging>war</packaging>
 
@@ -26,7 +26,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- connector SDK version -->
-    <version.connectors>8.5.10</version.connectors>
+    <version.connectors>8.6.4</version.connectors>
 
     <!-- external libraries -->
     <version.assertj>3.26.3</version.assertj>
@@ -37,7 +37,7 @@
 
     <version.spring-boot>3.3.5</version.spring-boot>
     <version.jackson-databind>2.17.1</version.jackson-databind>
-    <version.spring-boot-starter-camunda>8.5.10</version.spring-boot-starter-camunda>
+    <version.spring-boot-starter-camunda>8.6.4</version.spring-boot-starter-camunda>
     <version.logback>1.5.12</version.logback>
 
 

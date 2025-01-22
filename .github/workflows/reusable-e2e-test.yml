@@ -36,10 +36,10 @@ jobs:
       - name: e2e tests (deployed connector, against c8 + s4)
         env:
           e2e: true
-          clusterId: ${{ secrets.C85_CLUSTER_ID }}
-          clientId: ${{ secrets.C85_CLIENT_ID }}
-          clientSecret: ${{ secrets.C85_CLIENT_SECRET }}
-          region: ${{ secrets.C85_REGION }}
+          clusterId: ${{ secrets.C86_CLUSTER_ID }}
+          clientId: ${{ secrets.C86_CLIENT_ID }}
+          clientSecret: ${{ secrets.C86_CLIENT_SECRET }}
+          region: ${{ secrets.C86_REGION }}
         run: |
           # by env var e2e, only the respective tests are run
           mvn ${{ inputs.maven-options }} test
