@@ -34,6 +34,6 @@ Connector as a `.war` Java application on Cloud Foundry.
 - create release branch: `release/8.x`
 - adjust version in `/src/pom.xml`
 - update dependencies in `/src/pom.xml` so they fit the C8 target (fex connectors sdk version)
-- in `/.github/workflows/reusable-{deploy,e2e-test}.yml`,
+- in `/.github/workflows/reusable-{deploy,e2e-test}.yml`,   
   adjust `secrets.C8x_...` to the target cluster version (and eventually create those gh secrets)
 - push (to) the release branch
