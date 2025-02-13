@@ -46,9 +46,9 @@ jobs:
           sed -i.bak -e "s/<app-version>/${{ inputs.connector_version }}/g" \
           -e "s/<mangled-version>/${mangledVersion}/g" \
           -e "s/name: sap-rfc-connector$/name: sap-rfc-connector-${{ inputs.connector_version }}/g" \
-          -e "s/<your-cluster-id>/${{ secrets.C86_CLUSTER_ID }}/g" \
-          -e "s/<client-id-credential-from-api-client>/${{ secrets.C86_CLIENT_ID }}/g" \
-          -e "s/<client-secret-credential-from-api-client>/${{ secrets.C86_CLIENT_SECRET }}/g" \
+          -e "s/<your-cluster-id>/'${{ secrets.C86_CLUSTER_ID }}'/g" \
+          -e "s/<client-id-credential-from-api-client>/'${{ secrets.C86_CLIENT_ID }}'/g" \
+          -e "s/<client-secret-credential-from-api-client>/'${{ secrets.C86_CLIENT_SECRET }}'/g" \
           -e "s/<your-cluster-region>/${{ secrets.C86_REGION }}/g" \
           mtad.yaml.example
           mv mtad.yaml.example mtad.yaml
