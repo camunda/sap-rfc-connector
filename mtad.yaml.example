@@ -14,10 +14,10 @@ modules:
       SPRING_PROFILES_ACTIVE: cloud
       USE_JCO: true
       CAMUNDA_CLIENT_MODE: saas
-      CAMUNDA_CLIENT_CLUSTER-ID: <your-cluster-id>
-      CAMUNDA_CLIENT_AUTH_CLIENT-ID: <client-id-credential-from-api-client>
-      CAMUNDA_CLIENT_AUTH_CLIENT-SECRET: <client-secret-credential-from-api-client>
-      CAMUNDA_CLIENT_REGION: <your-cluster-region>
+      CAMUNDA_CLIENT_CLUSTERID: "<your-cluster-id>"
+      CAMUNDA_CLIENT_AUTH_CLIENTID: "<client-id-credential-from-api-client>"
+      CAMUNDA_CLIENT_AUTH_CLIENTSECRET: "<client-secret-credential-from-api-client>"
+      CAMUNDA_CLIENT_REGION: "<your-cluster-region>"
       CAMUNDA_CLIENT_OPERATE_ENABLED: false
       CAMUNDA_CONNECTOR_POLLING_ENABLED: false
       CAMUNDA_CONNECTOR_WEBHOOK_ENABLED: false
