@@ -93,7 +93,8 @@ public class E2eTest {
             .join();
 
     var result = processInstanceResult.getVariablesAsMap();
-    LinkedHashMap importing = (LinkedHashMap) result.get("importing");
+    LinkedHashMap importing =
+        (LinkedHashMap) ((LinkedHashMap) result.get("sys_params")).get("importing");
     int size = importing.size();
     LOGGER.info("//> return params ('importing') entries size: " + size);
     assertTrue(size >= 5, size + " table entries returned");
