@@ -241,7 +241,6 @@ public class RFCConnector implements OutboundConnectorFunction {
     }
   }
 
-  /** reflection b/c */
   // exporting/changing
   private void invoke(
       AbstractRemoteFunctionRequest rfc,
