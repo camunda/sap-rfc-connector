@@ -139,7 +139,19 @@ public class RFCConnector implements OutboundConnectorFunction {
     if (request.importing() != null && request.importing().length > 0) {
       LOGGER.debug("received {} IMPORTING", request.importing().length);
       for (Importing i : request.importing()) {
-        var _i = result.get(i.name()).getAsCollection().asList(HashMap.class);
+        var resultItem = result.get(i.name());
+        Object _i;
+        if (resultItem.isResultCollection()) {
+          _i = resultItem.getAsCollection().asList(HashMap.class);
+        } else if (resultItem.isResultPrimitive()) {
+          _i = resultItem.getAsPrimitive().asString();
+        } else if (resultItem.isResultObject()) {
+          _i = resultItem.getAsObject().toString();
+        } else {
+          throw new ConnectorException(
+              ErrorCodes.REQUEST_SERIALIZATION_ERROR.name(),
+              "Unknown result type for importing parameter: " + i.name());
+        }
         importingNode.put(i.name(), _i);
       }
     }
