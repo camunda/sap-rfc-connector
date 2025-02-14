@@ -9,7 +9,7 @@ The reason that this Connector is not distributed as a Docker image like other C
 (optional) compile in a version of JCo for local dev: `mvn install:install-file -Dfile=sapjco3.jar -DgroupId=com.sap.conn.jco -DartifactId=com.sap.conn.jco.sapjco3 -Dversion=3.1.10 -Dpackaging=jar`
 
 - create a `<dest>.jcoDestination` file in the classpath to configure the connection to the SAP system
-- add the environment variable to the "Run/Debug" configuration (needs to be a JSON array)    
+- add the environment variable to the "Run/Debug" configuration (needs to be a JSON array)
   `destinations=[{"name": "<dest>", "type": "RFC"}]`
 - uncomment "sapjco" section in `pom.xml` to include the SAP JCo dependency
 - make IDE recognize local `sapjco3.jar`, fex by setting "add dependencies with 'provided' scope to classpath"
