@@ -3,7 +3,6 @@ package io.camunda.connector.sap.rfc;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.camunda.zeebe.client.ZeebeClient;
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
