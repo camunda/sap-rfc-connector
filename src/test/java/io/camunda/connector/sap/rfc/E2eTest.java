@@ -19,6 +19,8 @@ public class E2eTest {
   ZeebeClient zeebeClient;
 
   E2eTest() {
+    LOGGER.info("sample env var for the e2e tests: " + System.getenv("clusterId"));
+    LOGGER.info("sample env var for the e2e tests: " + System.getenv("region"));
     // the evn vars are set in the github action
     // derived from the repo secrets
     zeebeClient =
