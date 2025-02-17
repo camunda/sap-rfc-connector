@@ -5,17 +5,7 @@ on:
     branches:
       - release/*
     paths:
-      # relevant
-      - .github/**
-      - element-templates/**
-      - src/**
       - pom.xml
-      # irrelevant
-      - "!.idea/**"
-      - "!examples/**"
-      - "!*.java-version"
-      - "!*.example"
-      - "!*.md"
 
 jobs:
   unit-test:
