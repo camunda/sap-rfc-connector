@@ -4,17 +4,15 @@ This project provides a Camunda connector for SAP RFC (Remote Function Calls) to
 
 The reason that this Connector is not distributed as a Docker image like other Camunda Connectors is a technical requirement: the SAP Java Connector (JCo) needs to be installed on the system where the Connector is running. This is not possible due to SAP's license restrictions within a redistributable Docker image. That's why you need to deploy the Connector as a `.war` Java application on Cloud Foundry.
 
-## How to use it
-
-- configure a BTP destination of type "RFC" to your SAP system
-- configure the Spring Boot basis application of the Connector (see `src/main/resources/application.properties`)
-- deploy as Java application on Cloud Foundry (-> see `mta(d).yaml.example`)
-  - `cf deploy ./ -f` (for `mtad.yaml`)
-  - `cf deploy ./mta_archive/*.mtar -f` (for `mta.yaml`)
-- import the Element Template into your Camunda Modeler environment (see `element-templates/sap-rfc-connector.json`)
-- use the Element Template in your BPMN process ("SAP RFC Connector") and observe jobs dispatched to your Connector on Cloud Foundry
-
 ## Development
+
+(optional) compile in a version of JCo for local dev: `mvn install:install-file -Dfile=sapjco3.jar -DgroupId=com.sap.conn.jco -DartifactId=com.sap.conn.jco.sapjco3 -Dversion=3.1.10 -Dpackaging=jar`
+
+- create a `<dest>.jcoDestination` file in the classpath to configure the connection to the SAP system
+- add the environment variable to the "Run/Debug" configuration (needs to be a JSON array)
+  `destinations=[{"name": "<dest>", "type": "RFC"}]`
+- uncomment "sapjco" section in `pom.xml` to include the SAP JCo dependency
+- make IDE recognize local `sapjco3.jar`, fex by setting "add dependencies with 'provided' scope to classpath"
 
 - on PRs
   - always bump the patch version first in `pom.xml`

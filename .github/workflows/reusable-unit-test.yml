@@ -31,5 +31,5 @@ jobs:
         run: mvn install:install-file -Dfile=sapjco3.jar -DgroupId=com.sap.conn.jco -DartifactId=com.sap.conn.jco.sapjco3 -Dversion=3.1.10 -Dpackaging=jar
 
       - name: run actual unit tests
-        run: mvn ${{ inputs.maven-options }} test
+        run: mvn ${{ inputs.maven-options }} --no-transfer-progress test
 

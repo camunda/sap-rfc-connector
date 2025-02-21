@@ -3,6 +3,7 @@ package io.camunda.connector.sap.rfc;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.camunda.zeebe.client.ZeebeClient;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,6 @@ public class E2eTest {
   ZeebeClient zeebeClient;
 
   E2eTest() {
-    // the evn vars are set in the github action
-    // derived from the repo secrets
     zeebeClient =
         ZeebeClient.newCloudClientBuilder()
             .withClusterId(System.getenv("clusterId"))
@@ -52,7 +51,7 @@ public class E2eTest {
   }
 
   @Test
-  void rfm() {
+  void rfm_collection_result() {
     zeebeClient.newDeployResourceCommand().addResourceFromClasspath("rfm.bpmn").send().join();
 
     var processInstanceResult =
@@ -71,5 +70,31 @@ public class E2eTest {
     int tableEntriesSize = ((ArrayList) tables.get("ENTRIES")).size();
     LOGGER.info("//> table entries size: " + tableEntriesSize);
     assertTrue(tableEntriesSize >= 1, tableEntriesSize + " table entries returned");
+  }
+
+  @Test
+  void rfm_atomic_result() {
+    zeebeClient
+        .newDeployResourceCommand()
+        .addResourceFromClasspath("rfm-atomic-values.bpmn")
+        .send()
+        .join();
+
+    var processInstanceResult =
+        zeebeClient
+            .newCreateInstanceCommand()
+            .bpmnProcessId("rfm-atomic-result")
+            .latestVersion()
+            .withResult()
+            .requestTimeout(Duration.ofSeconds(30))
+            .send()
+            .join();
+
+    var result = processInstanceResult.getVariablesAsMap();
+    LinkedHashMap importing =
+        (LinkedHashMap) ((LinkedHashMap) result.get("sys_params")).get("importing");
+    int size = importing.size();
+    LOGGER.info("//> return params ('importing') entries size: " + size);
+    assertTrue(size >= 5, size + " table entries returned");
   }
 }
