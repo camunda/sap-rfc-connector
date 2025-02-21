@@ -19,18 +19,12 @@ public class E2eTest {
   ZeebeClient zeebeClient;
 
   E2eTest() {
-    // the evn vars are set in the github action
-    // derived from the repo secrets
-    //    String zeebeAddress =
-    //        System.getenv("clusterId") + "." + System.getenv("region") + ".zeebe.camunda.io:443";
-
     zeebeClient =
         ZeebeClient.newCloudClientBuilder()
             .withClusterId(System.getenv("clusterId"))
             .withClientId(System.getenv("clientId"))
             .withClientSecret(System.getenv("clientSecret"))
             .withRegion(System.getenv("region"))
-            //            .grpcAddress(URI.create(zeebeAddress))
             .build();
   }
 
