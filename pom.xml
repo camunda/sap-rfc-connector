@@ -33,7 +33,7 @@
     <version.junit-jupiter>5.11.3</version.junit-jupiter>
     <version.mockito>5.14.2</version.mockito>
     <version.slf4j>2.0.16</version.slf4j>
-    <version.cloud-sdk>5.12.0</version.cloud-sdk>
+    <version.cloud-sdk>5.17.0</version.cloud-sdk>
 
     <version.spring-boot>3.3.5</version.spring-boot>
     <version.jackson-databind>2.17.1</version.jackson-databind>
