@@ -1,0 +1,13 @@
+name: unit-test
+
+on:
+  pull_request:
+    branches: [ "release/*" ]
+
+jobs:
+  build-and-test:
+    uses: ./.github/workflows/reusable-unit-test.yml
+    with:
+      java-version: '21'
+      distribution: 'temurin'
+      maven-options: '-PcheckFormat'

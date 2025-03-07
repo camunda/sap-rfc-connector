@@ -1,0 +1,61 @@
+name: e2e-test
+
+on:
+  pull_request:
+    branches: [ "release/*" ]
+
+jobs:
+  determine-connector-version:
+    runs-on: ubuntu-latest
+    outputs:
+      VERSION: ${{ steps.scope_version.outputs.VERSION }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up jdk 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: extract release version
+        id: extract_version
+        # this extracts <version> from pom.xml into env.VERSION
+        run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: scope the version into an output
+        id: scope_version
+        run: echo "VERSION=${{ env.VERSION }}" >> "$GITHUB_OUTPUT"
+
+  deploy-to-btp:
+    needs: determine-connector-version
+    uses: ./.github/workflows/reusable-deploy.yml
+    with:
+      connector_version: ${{ needs.determine-connector-version.outputs.VERSION }}
+      cf_api_endpoint: 'https://api.cf.eu10-004.hana.ondemand.com'
+      cf_org: camunda-dev
+      cf_space: sap-integration
+    secrets: inherit
+
+  e2e:
+    needs: deploy-to-btp
+    uses: ./.github/workflows/reusable-e2e-test.yml
+    with:
+      java-version: '21'
+      distribution: 'temurin'
+      maven-options: ''
+      spring_profile: 'integration-c85-saas'
+    secrets: inherit
+
+  undeploy:
+    needs: [ determine-connector-version, e2e ]
+    if: success() || failure()
+    uses: ./.github/workflows/reusable-undeploy.yml
+    with:
+      connector_version: ${{ needs.determine-connector-version.outputs.VERSION }}
+      cf_api_endpoint: 'https://api.cf.eu10-004.hana.ondemand.com'
+      cf_org: camunda-dev
+      cf_space: sap-integration
+    secrets: inherit

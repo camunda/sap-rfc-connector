@@ -1,37 +1,23 @@
 name: build-and-publish
-# - deployment to BTP
 
 on:
   push:
     branches:
-      - release/8.5
+      - release/*
     paths:
-      # relevant
-      - .github/**
-      - element-templates/**
-      - src/**
-      - Dockerfile
       - pom.xml
-      # irrelevant
-      - "!.idea/**"
-      - "!cap-bookshop/**"
-      - "!examples/**"
-      - "!*.java-version"
-      - "!*.example"
-      - "!*.md"
 
 jobs:
-  build-and-test:
-    uses: ./.github/workflows/reusable-build-and-test.yml
+  unit-test:
+    uses: ./.github/workflows/reusable-unit-test.yml
     with:
       java-version: '21'
       distribution: 'temurin'
       maven-options: '-PcheckFormat'
-#      spring_profile: 'integration-c85-saas'
     secrets: inherit
 
-  build:
-    needs: build-and-test
+  determine-connector-version:
+    needs: unit-test
     runs-on: ubuntu-latest
     outputs:
       VERSION: ${{ steps.scope_version.outputs.VERSION }}
@@ -46,9 +32,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: build
-        run: mvn -B -PcheckFormat package --file pom.xml -DskipTests # as we've run the tests in the previous job
-
       - name: extract release version
         id: extract_version
         # this extracts <version> from pom.xml into env.VERSION
@@ -58,13 +41,30 @@ jobs:
         id: scope_version
         run: echo "VERSION=${{ env.VERSION }}" >> "$GITHUB_OUTPUT"
 
-  deploy-to-btp:
-    needs: build
-    uses: ./.github/workflows/reusable-deploy.yml
-    with:
-      connector_version: ${{ needs.build.outputs.VERSION }}
-      region: 'bru-2'
-      cf_api_endpoint: 'https://api.cf.eu10-004.hana.ondemand.com'
-      cf_org: camunda-dev
-      cf_space: sap-integration-demo
-    secrets: inherit
+  build-and-gh_release:
+    needs: determine-connector-version
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up jdk 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: build project
+        run: mvn clean package
+
+      - name: create release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "target/*.war,element-templates/*.json,mtad.yaml.example"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ needs.determine-connector-version.outputs.VERSION }}
+          release_name: ${{ needs.determine-connector-version.outputs.VERSION }}
+          release_body: "Release ${{ needs.determine-connector-version.outputs.VERSION }}"
+          allowUpdates: 'true'
+          removeArtifacts: 'true'

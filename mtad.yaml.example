@@ -1,5 +1,5 @@
 _schema-version: 3.3.0
-ID: sap-rfc-connector-<app-version>
+ID: sap-rfc-connector-<mangled-version>
 version: <app-version>
 modules:
   - name: sap-rfc-connector
@@ -13,11 +13,14 @@ modules:
       LOGGING_LEVEL_ROOT: WARN # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
       SPRING_PROFILES_ACTIVE: cloud
       USE_JCO: true
-      ZEEBE_CLIENT_CLOUD_CLIENT_SECRET: <client-secret-credential-from-api-client>
-      ZEEBE_CLIENT_CLOUD_CLIENTID: <client-id-credential-from-api-client>
-      ZEEBE_CLIENT_CLOUD_CLUSTERID: <your-cluster-id>
-      ZEEBE_CLIENT_CLOUD_REGION: <your-cluster-region>
+      CAMUNDA_CLIENT_MODE: saas
+      CAMUNDA_CLIENT_CLUSTERID: "<your-cluster-id>"
+      CAMUNDA_CLIENT_AUTH_CLIENTID: "<client-id-credential-from-api-client>"
+      CAMUNDA_CLIENT_AUTH_CLIENTSECRET: "<client-secret-credential-from-api-client>"
+      CAMUNDA_CLIENT_REGION: "<your-cluster-region>"
+      CAMUNDA_CLIENT_OPERATE_ENABLED: false
       CAMUNDA_CONNECTOR_POLLING_ENABLED: false
+      CAMUNDA_CONNECTOR_WEBHOOK_ENABLED: false
     requires:
       - name: uaa-camunda-rfc-connector
       - name: dest-camunda-rfc-connector
@@ -31,14 +34,14 @@ modules:
       readiness-health-check-type: http
       routes:
         - protocol: http2
-          route: ${org}-${space}-${app-name}-8.5.${domain}
+          route: ${default-uri}
 resources:
   - name: uaa-camunda-rfc-connector
     type: org.cloudfoundry.managed-service
     parameters:
       config:
         tenant-mode: dedicated
-        xsappname: sap-rfc-connector
+        xsappname: sap-rfc-connector-<mangled-version>
       service: xsuaa
       service-plan: application
   - name: dest-camunda-rfc-connector

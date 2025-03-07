@@ -1,0 +1,31 @@
+name: reusable-undeploy
+
+on:
+  workflow_call:
+    inputs:
+      connector_version: # fex: 8.5.7 - 8.5 for Camunda release, 7 for connector version
+        required: true
+        type: string
+      cf_api_endpoint:
+        required: true
+        type: string
+      cf_org:
+        required: true
+        type: string
+      cf_space:
+        required: true
+        type: string
+
+jobs:
+  undeploy:
+    runs-on: ubuntu-latest
+    container:
+      image: cloudfoundry/cli:latest
+
+    steps:
+      - name: undeploy ${{inputs.connector_version}} from BTP
+        run: |
+          cf install-plugin multiapps -f
+          ls -al .
+          cf login -a ${{ inputs.cf_api_endpoint }} -u ${{ secrets.CF_USER }} -p ${{ secrets.CF_PASSWORD }} -o ${{ inputs.cf_org }} -s ${{ inputs.cf_space }}
+          cf delete sap-rfc-connector-${{ inputs.connector_version }} -f -r
