@@ -30,14 +30,14 @@ jobs:
 
       # this runs w/ the deployed (!) connector
       # against c8 saas
-      # and s4
-      - name: e2e tests (deployed connector, against c8 + s4)
+      # and ecc
+      - name: e2e tests (deployed connector, against c8 + ecc)
         env:
           e2e: true
-          clusterId: ${{ secrets.C86_CLUSTER_ID }}
-          clientId: ${{ secrets.C86_CLIENT_ID }}
-          clientSecret: ${{ secrets.C86_CLIENT_SECRET }}
-          region: ${{ secrets.C86_REGION }}
+          clusterId: ${{ secrets.C87_CLUSTER_ID }}
+          clientId: ${{ secrets.C87_CLIENT_ID }}
+          clientSecret: ${{ secrets.C87_CLIENT_SECRET }}
+          region: ${{ secrets.C87_REGION }}
         run: |
           # by env var e2e, only the respective tests are run
           mvn ${{ inputs.maven-options }} test
