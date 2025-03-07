@@ -1,6 +1,6 @@
 _schema-version: 3.3.0
 ID: sap-rfc-connector-<mangled-version>
-version: <app-version>
+version: "<app-version>"
 modules:
   - name: sap-rfc-connector
     type: java.tomcat
