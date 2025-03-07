@@ -12,8 +12,6 @@ on:
       maven-options:
         required: true
         type: string
-      spring_profile:
-        type: string
 
 jobs:
   e2e:
