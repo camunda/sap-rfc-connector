@@ -18,12 +18,12 @@ So the Connector needs to be deployed as a `.war` Java application on Cloud Foun
 - create a `<dest>.jcoDestination` file in the classpath to configure the connection to the SAP system
 - add the environment variable to the "Run/Debug" configuration (needs to be a JSON array)    
   `destinations=[{"name": "<dest>", "type": "RFC"}]`
-- uncomment "sapjco" section in `pom.xml` to include the SAP JCo dependency
+- uncomment `sapjco` section in `pom.xml` to include the SAP JCo dependency
 - make IDE recognize local `sapjco3.jar`, fex by setting "add dependencies with 'provided' scope to classpath"
 - source code formatting is done with `maven-spotless-plugin` upon build/compile
 - on PRs
     - always bump the patch version first in `pom.xml`
-    - don't change major or minor, as they indicate the Camunda 8 release assocation
+    - don't change major or minor, as they indicate the Camunda 8 release association
       &rarr; `sap-rfc-connector-8.5.2` is the version for Camunda 8.5, and the connector version 2
 
 ### Release cutting
