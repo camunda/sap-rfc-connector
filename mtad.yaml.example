@@ -18,6 +18,7 @@ modules:
       ZEEBE_CLIENT_CLOUD_CLUSTERID: <your-cluster-id>
       ZEEBE_CLIENT_CLOUD_REGION: <your-cluster-region>
       CAMUNDA_CONNECTOR_POLLING_ENABLED: false
+      CAMUNDA_CONNECTOR_SECRETPROVIDER_CONSOLE_ENABLED: true
     requires:
       - name: uaa-camunda-rfc-connector
       - name: dest-camunda-rfc-connector
