@@ -1,0 +1,55 @@
+_schema-version: 3.3.0
+ID: sap-rfc-connector-<mangled-version>
+version: <app-version>
+modules:
+  - name: sap-rfc-connector
+    type: java.tomcat
+    path: target/rfc-<app-version>.war
+    properties:
+      JBP_CONFIG_SAP_MACHINE_JRE: '{ version: 21.+ }'
+      LOGGING_LEVEL_COM_SAP_CLOUD_SDK: DEBUG # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
+      LOGGING_LEVEL_COM_SAP_CORE_CONNECTIVITY_JCO: DEBUG # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
+      LOGGING_LEVEL_IO_CAMUNDA_CONNECTOR_SAP_RFC: DEBUG # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
+      LOGGING_LEVEL_ROOT: WARN # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
+      SPRING_PROFILES_ACTIVE: cloud
+      USE_JCO: true
+      ZEEBE_CLIENT_CLOUD_CLIENT_SECRET: <client-secret-credential-from-api-client>
+      ZEEBE_CLIENT_CLOUD_CLIENTID: <client-id-credential-from-api-client>
+      ZEEBE_CLIENT_CLOUD_CLUSTERID: <your-cluster-id>
+      ZEEBE_CLIENT_CLOUD_REGION: <your-cluster-region>
+      CAMUNDA_CONNECTOR_POLLING_ENABLED: false
+    requires:
+      - name: uaa-camunda-rfc-connector
+      - name: dest-camunda-rfc-connector
+      - name: conn-camunda-rfc-connector
+    parameters:
+      buildpack: sap_java_buildpack_jakarta
+      disk-quota: 2G
+      enable-ssh: true
+      memory: 2G
+      readiness-health-check-http-endpoint: /actuator/health
+      readiness-health-check-type: http
+      routes:
+        - protocol: http2
+          route: ${default-uri}
+resources:
+  - name: uaa-camunda-rfc-connector
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        tenant-mode: dedicated
+        xsappname: sap-rfc-connector-<mangled-version>
+      service: xsuaa
+      service-plan: application
+  - name: dest-camunda-rfc-connector
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+  - name: conn-camunda-rfc-connector
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+parameters:
+  enable-parallel-deployments: true
