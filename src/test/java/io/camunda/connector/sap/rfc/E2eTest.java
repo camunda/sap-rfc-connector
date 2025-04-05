@@ -3,6 +3,7 @@ package io.camunda.connector.sap.rfc;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.camunda.zeebe.client.ZeebeClient;
+import java.net.URI;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,12 +20,16 @@ public class E2eTest {
   ZeebeClient zeebeClient;
 
   E2eTest() {
+    // the evn vars are set in the github action
+    // derived from the repo secrets
     zeebeClient =
         ZeebeClient.newCloudClientBuilder()
             .withClusterId(System.getenv("clusterId"))
             .withClientId(System.getenv("clientId"))
             .withClientSecret(System.getenv("clientSecret"))
             .withRegion(System.getenv("region"))
+            .grpcAddress(URI.create(System.getenv("ZEEBE_GRPC_ADDRESS")))
+            .restAddress(URI.create(System.getenv("ZEEBE_REST_ADDRESS")))
             .build();
   }
 

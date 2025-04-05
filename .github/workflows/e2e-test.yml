@@ -45,7 +45,7 @@ jobs:
     with:
       java-version: '21'
       distribution: 'temurin'
-      maven-options: ''
+      maven-options: '--no-transfer-progress'
       spring_profile: 'integration-c85-saas'
     secrets: inherit
 
