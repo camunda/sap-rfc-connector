@@ -3,6 +3,7 @@ package io.camunda.connector.sap.rfc;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.camunda.zeebe.client.ZeebeClient;
+import java.net.URI;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -27,6 +28,8 @@ public class E2eTest {
             .withClientId(System.getenv("clientId"))
             .withClientSecret(System.getenv("clientSecret"))
             .withRegion(System.getenv("region"))
+            .grpcAddress(URI.create(System.getenv("ZEEBE_GRPC_ADDRESS")))
+            .restAddress(URI.create(System.getenv("ZEEBE_REST_ADDRESS")))
             .build();
   }
 
