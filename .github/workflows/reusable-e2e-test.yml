@@ -43,5 +43,5 @@ jobs:
           ZEEBE_REST_ADDRESS: https://${{ secrets.C86_REGION }}.zeebe.camunda.io/${{ secrets.C86_CLUSTER_ID }}
         run: |
           # by env var e2e, only the respective tests are run
-          mvn -B ${{ inputs.maven-options }} test
+          mvn ${{ inputs.maven-options }} test
           
