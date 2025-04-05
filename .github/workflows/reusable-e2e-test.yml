@@ -39,9 +39,9 @@ jobs:
           clientId: ${{ secrets.C86_CLIENT_ID }}
           clientSecret: ${{ secrets.C86_CLIENT_SECRET }}
           region: ${{ secrets.C86_REGION }}
-          ZEEBE_GRPC_ADDRESS: grpcs://${{ secrets.C87_CLUSTER_ID }}.${{ secrets.C87_REGION }}.zeebe.camunda.io:443
-          ZEEBE_REST_ADDRESS: https://${{ secrets.C87_REGION }}.zeebe.camunda.io/${{ secrets.C87_CLUSTER_ID }}
+          ZEEBE_GRPC_ADDRESS: grpcs://${{ secrets.C86_CLUSTER_ID }}.${{ secrets.C86_REGION }}.zeebe.camunda.io:443
+          ZEEBE_REST_ADDRESS: https://${{ secrets.C86_REGION }}.zeebe.camunda.io/${{ secrets.C86_CLUSTER_ID }}
         run: |
           # by env var e2e, only the respective tests are run
-          mvn ${{ inputs.maven-options }} test
+          mvn -B ${{ inputs.maven-options }} test
           
