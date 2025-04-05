@@ -21,7 +21,7 @@ modules:
       CAMUNDA_CLIENT_OPERATE_ENABLED: false
       CAMUNDA_CONNECTOR_POLLING_ENABLED: false
       CAMUNDA_CONNECTOR_WEBHOOK_ENABLED: false
-      CAMUNDA_CONNECTOR_SECRETPROVIDER_CONSOLE_ENABLED: true
+#      CAMUNDA_CONNECTOR_SECRETPROVIDER_CONSOLE_ENABLED: true
     requires:
       - name: uaa-camunda-rfc-connector
       - name: dest-camunda-rfc-connector
