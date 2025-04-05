@@ -18,6 +18,10 @@ modules:
       CAMUNDA_CLIENT_AUTH_CLIENTID: "<client-id-credential-from-api-client>"
       CAMUNDA_CLIENT_AUTH_CLIENTSECRET: "<client-secret-credential-from-api-client>"
       CAMUNDA_CLIENT_REGION: "<your-cluster-region>"
+      ZEEBE_CLIENT_CLOUD_CLIENT_SECRET: "<client-secret-credential-from-api-client>"
+      ZEEBE_CLIENT_CLOUD_CLIENTID: "<client-id-credential-from-api-client>"
+      ZEEBE_CLIENT_CLOUD_CLUSTERID: "<your-cluster-id>"
+      ZEEBE_CLIENT_CLOUD_REGION: "<your-cluster-region>"
 #      CAMUNDA_CONNECTOR_SECRETPROVIDER_CONSOLE_ENABLED: true ### TODO: this breaks hybrid runtime
       OPERATE_CLIENT_ENABLED: false
       CAMUNDA_CONNECTOR_POLLING_ENABLED: false
