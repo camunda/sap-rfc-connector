@@ -94,7 +94,7 @@ jobs:
           cache: maven
 
       - name: build
-        run: mvn package -DskipTests # as we've run the tests in the previous job
+        run: mvn -B package -DskipTests # as we've run the tests in the previous job
 
       # second, prep deployment descriptor
       - name: download mtad.yaml
