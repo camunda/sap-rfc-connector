@@ -18,6 +18,7 @@ modules:
       CAMUNDA_CLIENT_AUTH_CLIENTID: "<client-id-credential-from-api-client>"
       CAMUNDA_CLIENT_AUTH_CLIENTSECRET: "<client-secret-credential-from-api-client>"
       CAMUNDA_CLIENT_REGION: "<your-cluster-region>"
+      ZEEBE_ADDRESS: "<your-cluster-id>.<your-cluster-region>.zeebe.camunda.io:443"
       ZEEBE_CLIENT_CLOUD_CLIENT_SECRET: "<client-secret-credential-from-api-client>"
       ZEEBE_CLIENT_CLOUD_CLIENTID: "<client-id-credential-from-api-client>"
       ZEEBE_CLIENT_CLOUD_CLUSTERID: "<your-cluster-id>"
