@@ -1,5 +1,7 @@
 package io.camunda.connector.sap.rfc;
 
+import static io.camunda.connector.sap.rfc.RFCConnector.*;
+
 import com.sap.cloud.sdk.cloudplatform.connectivity.Destination;
 import com.sap.cloud.sdk.s4hana.connectivity.exception.RequestExecutionException;
 import com.sap.cloud.sdk.s4hana.connectivity.exception.RequestSerializationException;
@@ -27,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"deprecation", "rawtypes"})
 @OutboundConnector(
-    name = "SAPRFCOUTBOUNDCONNECTOR",
+    name = NAME,
     inputVariables = {
       "destination",
       "moduleName",
@@ -37,16 +39,18 @@ import org.slf4j.LoggerFactory;
       "changing",
       "tables"
     },
-    type = "io.camunda:sap:rfc:outbound:1")
+    type = TYPE)
 @ElementTemplate(
-    id = "io.camunda.connector.sap.rfc.outbound.v1",
+    id = NAME,
     name = "SAP RFC connector",
-    version = 1,
+    version = VERSION,
     icon = "sap-rfc-connector-outbound.svg",
-    documentationRef = "https://docs.camunda.io/xxx",
+    documentationRef = "https://docs.camunda.io/docs/components/camunda-integrations/sap",
     inputDataClass = RFCConnectorRequest.class)
 public class RFCConnector implements OutboundConnectorFunction {
-
+  public static final String NAME = "SAP_RFC_CONNECTOR";
+  public static final int VERSION = 1;
+  public static final String TYPE = "io.camunda:sap-rfc" + ":" + VERSION;
   private static final Logger LOGGER = LoggerFactory.getLogger(RFCConnector.class);
 
   @Override
