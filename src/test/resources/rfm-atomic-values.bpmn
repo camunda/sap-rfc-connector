@@ -17,7 +17,7 @@
           <zeebe:input source="rfm" target="moduleType" />
           <zeebe:input source="RFC_GET_SAP_SYSTEM_PARAMETERS" target="moduleName" />
           <zeebe:input source="=[&#10;  {&#34;name&#34;: &#34;DATE_FORMAT&#34;, &#34;type&#34;: &#34;CABN-ATSCH&#34;},&#10;  {&#34;name&#34;: &#34;DECIMAL_SIGN&#34;, &#34;type&#34;: &#34;CABN-ATKLE&#34;},&#10;  {&#34;name&#34;: &#34;SAP_SYSTEM_RELEASE&#34;, &#34;type&#34;: &#34;SY-SAPRL&#34;},&#10;  {&#34;name&#34;: &#34;USER_NAME&#34;, &#34;type&#34;: &#34;SY-UNAME&#34;},&#10;  {&#34;name&#34;: &#34;LANGUAGE&#34;, &#34;type&#34;: &#34;MCDOK-ACTION&#34;}&#10;]" target="importing" />
-          <zeebe:input source="=[{name:&#34;table&#34;, type: &#34;some_type&#34;},{name:&#34;BAPIRET2&#34;, isReturn:true}]" target="tables" />
+          <zeebe:input source="=[{name:&#34;BAPIRET2&#34;, isReturn:true}]" target="tables" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="sys_params" />
