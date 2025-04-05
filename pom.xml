@@ -16,7 +16,7 @@
   <description>Camunda RFC protocol outbound Connector</description>
   <groupId>io.camunda.connector.sap.rfc</groupId>
   <artifactId>rfc</artifactId>
-  <version>8.6.2</version>
+  <version>8.7.0</version>
 <!--  necessary for SAP BTP cf to pick up SAP's JCo lib -->
   <packaging>war</packaging>
 
@@ -26,19 +26,19 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- connector SDK version -->
-    <version.connectors>8.6.4</version.connectors>
+    <version.connectors>8.7.0-alpha4</version.connectors>
 
     <!-- external libraries -->
     <version.assertj>3.26.3</version.assertj>
-    <version.junit-jupiter>5.11.3</version.junit-jupiter>
+    <version.junit-jupiter>5.11.4</version.junit-jupiter>
     <version.mockito>5.14.2</version.mockito>
     <version.slf4j>2.0.16</version.slf4j>
-    <version.cloud-sdk>5.12.0</version.cloud-sdk>
+    <version.cloud-sdk>5.13.0</version.cloud-sdk>
 
     <version.spring-boot>3.3.5</version.spring-boot>
     <version.jackson-databind>2.17.1</version.jackson-databind>
-    <version.spring-boot-starter-camunda>8.6.7</version.spring-boot-starter-camunda>
-    <version.logback>1.5.12</version.logback>
+    <version.spring-boot-starter-camunda>8.7.0-alpha4</version.spring-boot-starter-camunda>
+    <version.logback>1.5.16</version.logback>
 
 
     <!-- maven plugins -->
@@ -125,7 +125,7 @@
 <!--    <dependency>-->
 <!--      <groupId>com.sap.conn.jco</groupId>-->
 <!--      <artifactId>com.sap.conn.jco.sapjco3</artifactId>-->
-<!--      <version>${version.sap-jco}</version>-->
+<!--      <version>3.1.10</version>-->
 <!--      <scope>provided</scope>-->
 <!--    </dependency>-->
 

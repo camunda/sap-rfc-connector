@@ -46,7 +46,6 @@ jobs:
       java-version: '21'
       distribution: 'temurin'
       maven-options: ''
-      spring_profile: 'integration-c85-saas'
     secrets: inherit
 
   undeploy:
