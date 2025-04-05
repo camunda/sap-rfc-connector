@@ -18,9 +18,10 @@ modules:
       CAMUNDA_CLIENT_AUTH_CLIENTID: "<client-id-credential-from-api-client>"
       CAMUNDA_CLIENT_AUTH_CLIENTSECRET: "<client-secret-credential-from-api-client>"
       CAMUNDA_CLIENT_REGION: "<your-cluster-region>"
-      CAMUNDA_CLIENT_OPERATE_ENABLED: false
+      OPERATE_CLIENT_ENABLED: false
       CAMUNDA_CONNECTOR_POLLING_ENABLED: false
       CAMUNDA_CONNECTOR_WEBHOOK_ENABLED: false
+#      CAMUNDA_CONNECTOR_SECRETPROVIDER_CONSOLE_ENABLED: true ### TODO: fix
     requires:
       - name: uaa-camunda-rfc-connector
       - name: dest-camunda-rfc-connector

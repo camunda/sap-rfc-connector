@@ -1,11 +1,11 @@
 {
   "$schema" : "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
   "name" : "SAP RFC connector",
-  "id" : "io.camunda.connector.sap.rfc.outbound.v1",
+  "id" : "SAP_RFC_CONNECTOR",
   "metadata" : {
     "keywords" : [ ]
   },
-  "documentationRef" : "https://docs.camunda.io/xxx",
+  "documentationRef" : "https://docs.camunda.io/docs/components/camunda-integrations/sap",
   "version" : 1,
   "category" : {
     "id" : "connectors",
@@ -29,7 +29,7 @@
     "label" : "Retries"
   } ],
   "properties" : [ {
-    "value" : "io.camunda:sap:rfc:outbound:1",
+    "value" : "io.camunda:sap-rfc:1",
     "binding" : {
       "property" : "type",
       "type" : "zeebe:taskDefinition"
