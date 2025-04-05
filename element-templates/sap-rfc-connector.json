@@ -2,6 +2,9 @@
   "$schema" : "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
   "name" : "SAP RFC connector",
   "id" : "io.camunda.connector.sap.rfc.outbound.v1",
+  "metadata" : {
+    "keywords" : [ ]
+  },
   "documentationRef" : "https://docs.camunda.io/xxx",
   "version" : 1,
   "category" : {
@@ -216,7 +219,6 @@
     "label" : "Retry backoff",
     "description" : "ISO-8601 duration to wait between retries",
     "value" : "PT0S",
-    "feel" : "optional",
     "group" : "retries",
     "binding" : {
       "key" : "retryBackoff",
