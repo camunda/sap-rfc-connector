@@ -28,7 +28,6 @@ jobs:
           java-version: ${{ inputs.java-version }}
           distribution: ${{ inputs.distribution }}
           cache: maven
-          echo "content of src/test/resources: $(ls -al ./src/test/resources)"
 
       # this runs w/ the deployed (!) connector
       # against c8 saas
@@ -40,7 +39,9 @@ jobs:
           clientId: ${{ secrets.C85_CLIENT_ID }}
           clientSecret: ${{ secrets.C85_CLIENT_SECRET }}
           region: ${{ secrets.C85_REGION }}
+          ZEEBE_GRPC_ADDRESS: grpcs://${{ secrets.C85_CLUSTER_ID }}.${{ secrets.C85_REGION }}.zeebe.camunda.io:443
+          ZEEBE_REST_ADDRESS: https://${{ secrets.C85_REGION }}.zeebe.camunda.io/${{ secrets.C85_CLUSTER_ID }}
         run: |
           # by env var e2e, only the respective tests are run
-          mvn ${{ inputs.maven-options }} --no-transfer-progress test
+          mvn ${{ inputs.maven-options }} test
           
