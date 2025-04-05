@@ -43,7 +43,7 @@ public class E2eTest {
             .bpmnProcessId("bapi")
             .latestVersion()
             .withResult()
-            .requestTimeout(java.time.Duration.ofSeconds(30))
+            .requestTimeout(Duration.ofSeconds(30))
             .send()
             .join();
 
@@ -65,7 +65,7 @@ public class E2eTest {
             .bpmnProcessId("rfm")
             .latestVersion()
             .withResult()
-            .requestTimeout(java.time.Duration.ofSeconds(30))
+            .requestTimeout(Duration.ofSeconds(30))
             .send()
             .join();
 
