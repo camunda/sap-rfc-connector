@@ -17,7 +17,7 @@
   <groupId>io.camunda.connector.sap.rfc</groupId>
   <artifactId>rfc</artifactId>
   <version>8.7.0</version>
-<!--  necessary for SAP BTP cf to pick up SAP's JCo lib -->
+  <!--  necessary for SAP BTP cf to pick up SAP's JCo lib -->
   <packaging>war</packaging>
 
   <properties>
@@ -26,7 +26,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- connector SDK version -->
-    <version.connectors>8.7.0-alpha4</version.connectors>
+    <version.connectors>8.7.0</version.connectors>
 
     <!-- external libraries -->
     <version.assertj>3.26.3</version.assertj>
@@ -37,7 +37,7 @@
 
     <version.spring-boot>3.3.5</version.spring-boot>
     <version.jackson-databind>2.17.1</version.jackson-databind>
-    <version.spring-boot-starter-camunda>8.7.0-alpha4</version.spring-boot-starter-camunda>
+    <version.spring-boot-starter-camunda>8.7.0</version.spring-boot-starter-camunda>
     <version.logback>1.5.16</version.logback>
 
 
@@ -49,7 +49,7 @@
     <plugin.version.maven-jar-plugin>3.4.2</plugin.version.maven-jar-plugin>
     <plugin.version.maven-war-plugin>3.4.0</plugin.version.maven-war-plugin>
     <plugin.version.maven-resources-plugin>3.3.1</plugin.version.maven-resources-plugin>
-<!--    <plugin.version.maven-shade-plugin>3.5.2</plugin.version.maven-shade-plugin>-->
+    <!--    <plugin.version.maven-shade-plugin>3.5.2</plugin.version.maven-shade-plugin>-->
     <plugin.version.maven-surefire-plugin>3.5.2</plugin.version.maven-surefire-plugin>
     <plugin.version.spotless-maven-plugin>2.43.0</plugin.version.spotless-maven-plugin>
     <plugin.version.maven-exec-maven-plugin>3.5.0</plugin.version.maven-exec-maven-plugin>
@@ -122,12 +122,12 @@
       <version>${version.cloud-sdk}</version>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>com.sap.conn.jco</groupId>-->
-<!--      <artifactId>com.sap.conn.jco.sapjco3</artifactId>-->
-<!--      <version>3.1.10</version>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>com.sap.conn.jco</groupId>-->
+    <!--      <artifactId>com.sap.conn.jco.sapjco3</artifactId>-->
+    <!--      <version>3.1.10</version>-->
+    <!--      <scope>provided</scope>-->
+    <!--    </dependency>-->
 
     <!-- for SAP BTP cf, this is provided by the platform -->
     <!-- needs local installation for dev time-->
