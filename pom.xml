@@ -40,7 +40,6 @@
     <version.spring-boot-starter-camunda>8.5.15</version.spring-boot-starter-camunda>
     <version.logback>1.5.12</version.logback>
 
-
     <!-- maven plugins -->
     <plugin.version.maven-clean-plugin>3.4.0</plugin.version.maven-clean-plugin>
     <plugin.version.maven-compiler-plugin>3.13.0</plugin.version.maven-compiler-plugin>
