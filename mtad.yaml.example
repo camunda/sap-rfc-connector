@@ -4,7 +4,7 @@ version: "<app-version>"
 modules:
   - name: sap-rfc-connector
     type: java.tomcat
-    path: target/rfc-<app-version>.war
+    path: rfc-<app-version>.war
     properties:
       JBP_CONFIG_SAP_MACHINE_JRE: '{ version: 21.+ }'
       LOGGING_LEVEL_COM_SAP_CLOUD_SDK: DEBUG # any of TRACE, DEBUG, INFO, WARN, ERROR, OFF
@@ -19,6 +19,7 @@ modules:
       CAMUNDA_CLIENT_AUTH_CLIENTSECRET: "<client-secret-credential-from-api-client>"
       CAMUNDA_CLIENT_REGION: "<your-cluster-region>"
       CAMUNDA_CLIENT_OPERATE_ENABLED: false
+      OPERATE_CLIENT_ENABLED: false
       CAMUNDA_CONNECTOR_POLLING_ENABLED: false
       CAMUNDA_CONNECTOR_WEBHOOK_ENABLED: false
       CAMUNDA_CONNECTOR_SECRETPROVIDER_CONSOLE_ENABLED: true
