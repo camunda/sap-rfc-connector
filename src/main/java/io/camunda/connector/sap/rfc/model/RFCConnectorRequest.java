@@ -22,7 +22,7 @@ public record RFCConnectorRequest(
             },
             constraints = @TemplateProperty.PropertyConstraints(notEmpty = true))
         String moduleType,
-    @TemplateProperty(label = "BAP/module name", feel = Property.FeelMode.optional) @NotEmpty
+    @TemplateProperty(label = "BAPI/module name", feel = Property.FeelMode.optional) @NotEmpty
         String moduleName,
     @TemplateProperty(
             label = "exporting parameter",
