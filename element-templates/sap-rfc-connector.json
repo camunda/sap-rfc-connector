@@ -73,7 +73,7 @@
     } ]
   }, {
     "id" : "moduleName",
-    "label" : "BAP/module name",
+    "label" : "BAPI/module name",
     "optional" : false,
     "constraints" : {
       "notEmpty" : true
