@@ -1,3 +1,9 @@
+----------------------------------------------------------------------------------------------------------------------------
+
+⚠️⚠️ **This repository will be retired and archived in March 2026 in favor of https://github.com/camunda/sap-connectors** ⚠️⚠️
+
+-----------------------------------------------------------------------------------------------------------------------------
+
 # Camunda-SAP integration: SAP RFC protocol outbound Connector
 
 Camunda Connector to interact with an SAP S/4 and ECC system via RFC.
